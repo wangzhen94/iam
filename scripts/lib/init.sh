@@ -16,5 +16,5 @@ source "${IAM_ROOT}/scripts/lib/color.sh"
 
 iam::log::install_errexit
 
-source "${IAM_ROOT}/scripts/lib/version.sh"
+# source "${IAM_ROOT}/scripts/lib/version.sh"
 source "${IAM_ROOT}/scripts/lib/golang.sh"
