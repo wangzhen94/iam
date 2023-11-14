@@ -4,11 +4,172 @@
     <option name="autoReloadType" value="ALL" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="17ab7039-1674-43f1-b769-f292d7ac01c1" name="Changes" comment="" />
+    <list default="true" id="17ab7039-1674-43f1-b769-f292d7ac01c1" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/cmd/iam-apiserver/apiserver.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/configs/README.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/configs/access.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/configs/iam-apiserver.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/configs/iam-authz-server.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/configs/iam-pump.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/configs/iam-watcher.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/configs/iam.sql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/configs/iamctl.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/configs/values-pre-env.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/configs/values-prod-env.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/configs/values-test-env.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/configs/values-with-nodeport.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/deployments/iam.invalid.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/deployments/iam.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/deployments/iam/.helmignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/deployments/iam/Chart.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/deployments/iam/service-with-nodeport/iam-apiserver-service.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/deployments/iam/service-with-nodeport/iam-authz-server-service.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/deployments/iam/service-with-nodeport/iam-pump-service.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/deployments/iam/service-with-nodeport/iam-watcher-service.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/deployments/iam/templates/_helpers.tpl" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/deployments/iam/templates/hpa.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/deployments/iam/templates/iam-apiserver-deployment.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/deployments/iam/templates/iam-apiserver-service.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/deployments/iam/templates/iam-authz-server-deployment.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/deployments/iam/templates/iam-authz-server-service.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/deployments/iam/templates/iam-pump-deployment.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/deployments/iam/templates/iam-pump-service.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/deployments/iam/templates/iam-watcher-deployment.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/deployments/iam/templates/iam-watcher-service.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/deployments/iam/templates/iamctl-deployment.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/deployments/iam/values.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/deployments/templates/iam-apiserver-deployment.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/deployments/templates/iam-apiserver-service.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/deployments/templates/iam-configmap.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/deployments/templates/iam.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/examples/code/main.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/examples/error/main.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/internal/apiserver/app.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/internal/apiserver/config/config.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/internal/apiserver/grpc.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/internal/apiserver/options/options.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/internal/apiserver/options/validation.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/internal/apiserver/router.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/internal/apiserver/run.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/internal/apiserver/server.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/internal/apiserver/service/v1/doc.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/internal/apiserver/service/v1/service.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/internal/apiserver/service/v1/user.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/internal/apiserver/service/v1/user_test.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/internal/apiserver/store/mysql/mysql.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/internal/apiserver/store/mysql/user.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/internal/apiserver/store/store.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/internal/apiserver/store/user.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/internal/pkg/code/apiserver.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/internal/pkg/code/authzserver.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/internal/pkg/code/base.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/internal/pkg/code/code.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/internal/pkg/code/code_generated.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/internal/pkg/code/doc.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/internal/pkg/middleware/context.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/internal/pkg/middleware/middleware.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/internal/pkg/middleware/publish.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/internal/pkg/middleware/requestid.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/internal/pkg/options/jwt.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/internal/pkg/options/mysql_options.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/internal/pkg/server/config.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/internal/pkg/server/doc.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/internal/pkg/server/genericapiserver.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/internal/pkg/util/gormutil/gorm.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pkg/app/app.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pkg/app/cmd.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pkg/app/config.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pkg/app/doc.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pkg/app/flag.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pkg/app/help.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pkg/app/options.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pkg/db/mysql.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pkg/log/Context.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pkg/log/cronlog/doc.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pkg/log/cronlog/log.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pkg/log/distribution/doc.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pkg/log/distribution/logger.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pkg/log/encoder.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pkg/log/example/context/doc.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pkg/log/example/context/main.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pkg/log/example/doc.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pkg/log/example/example.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pkg/log/example/simple/doc.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pkg/log/example/simple/simple.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pkg/log/example/vlevel/doc.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pkg/log/example/vlevel/v_level.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pkg/log/klog/doc.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pkg/log/klog/logger.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pkg/log/log.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pkg/log/logrus/doc.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pkg/log/logrus/hook.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pkg/log/logrus/logger.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pkg/log/options.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pkg/log/types.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pkg/storage/doc.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pkg/storage/redis_cluster.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pkg/storage/storage.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/third_party/forked/murmur3/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/third_party/forked/murmur3/.travis.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/third_party/forked/murmur3/LICENSE" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/third_party/forked/murmur3/README.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/third_party/forked/murmur3/murmur.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/third_party/forked/murmur3/murmur128.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/third_party/forked/murmur3/murmur32.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/third_party/forked/murmur3/murmur32_legacy.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/third_party/forked/murmur3/murmur64.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/third_party/forked/murmur3/murmur_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.pk" beforeDir="false" afterPath="$PROJECT_DIR$/go.mod" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmd/.pk" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmd/iam-apiserver/.pk" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/configs/.pk" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/deployments/.pk" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/deployments/iam/.pk" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/deployments/iam/service-with-nodeport/.pk" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/deployments/iam/templates/.pk" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/deployments/templates/.pk" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/examples/code/.pk" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/examples/error/.pk" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/.pk" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/apiserver/.pk" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/apiserver/config/.pk" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/apiserver/options/.pk" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/apiserver/store/.pk" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/apiserver/store/mysql/.pk" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/pkg/code/.pk" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/pkg/middleware/.pk" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/pkg/options/.pk" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/pkg/server/.pk" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/pkg/util/gormutil/.pk" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pkg/app/.pk" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pkg/db/.pk" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pkg/log/.pk" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pkg/log/cronlog/.pk" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pkg/log/distribution/.pk" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pkg/log/example/.pk" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pkg/log/example/context/.pk" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pkg/log/example/simple/.pk" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pkg/log/example/vlevel/.pk" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pkg/log/klog/.pk" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pkg/log/logrus/.pk" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pkg/util/.pk" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pkg/util/genutil/.pk" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/third_party/.pk" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/third_party/forked/.pk" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/third_party/forked/murmur3/.pk" beforeDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Go File" />
+      </list>
+    </option>
   </component>
   <component name="GOROOT" url="file:///usr/local/go" />
   <component name="Git.Settings">
@@ -18,9 +179,13 @@
   <component name="GoLibraries">
     <option name="indexEntireGoPath" value="true" />
   </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
   <component name="ProjectId" id="2XwsXQKENYddbARRA1fGDVtvXS7" />
   <component name="ProjectLevelVcsManager">
     <OptionsSetting value="false" id="Update" />
+    <ConfirmationsSetting value="2" id="Add" />
   </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -28,6 +193,7 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "DefaultGoTemplateProperty": "Go File",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.go.formatter.settings.were.checked": "true",
     "RunOnceActivity.go.migrated.go.modules.settings": "true",
@@ -35,17 +201,93 @@
     "WebServerToolWindowFactoryState": "false",
     "go.import.settings.migrated": "true",
     "go.sdk.automatically.set": "true",
-    "last_opened_file_path": "/Users/wangzhen/go/src/github.com/wangzhen94/myiam",
+    "last_opened_file_path": "/Users/wangzhen/go/src/github.com/wangzhen94/iam",
     "node.js.detected.package.eslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)"
+    "node.js.selected.package.eslint": "(autodetect)",
+    "settings.editor.selected.configurable": "go.vgo"
   }
 }]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/examples/error" />
+      <recent name="$PROJECT_DIR$/internal/pkg" />
+      <recent name="$PROJECT_DIR$/deployments" />
+      <recent name="$PROJECT_DIR$/configs" />
+      <recent name="$PROJECT_DIR$/pkg/app" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/internal/pkg/util/gormutil" />
+      <recent name="$PROJECT_DIR$/internal/pkg/util/gormm" />
+      <recent name="$PROJECT_DIR$/internal/pkg/util/gorm" />
+      <recent name="$PROJECT_DIR$/internal/apiserver" />
+      <recent name="$PROJECT_DIR$/scripts/lib" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Go Build.go build github.com/wangzhen94/iam/examples/code (1)">
+    <configuration default="true" type="GoApplicationRunConfiguration" factoryName="Go Application">
+      <module name="myiam" />
+      <working_directory value="$PROJECT_DIR$" />
+      <kind value="PACKAGE" />
+      <package value="github.com/wangzhen94/myiam" />
+      <directory value="$PROJECT_DIR$" />
+      <filePath value="$PROJECT_DIR$" />
+      <method v="2" />
+    </configuration>
+    <configuration name="go build github.com/wangzhen94/iam/cmd/iam-apiserver" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
+      <module name="myiam" />
+      <working_directory value="$PROJECT_DIR$" />
+      <kind value="PACKAGE" />
+      <package value="github.com/wangzhen94/iam/cmd/iam-apiserver" />
+      <directory value="$PROJECT_DIR$" />
+      <filePath value="$PROJECT_DIR$/cmd/iam-apiserver/apiserver.go" />
+      <method v="2" />
+    </configuration>
+    <configuration name="go build github.com/wangzhen94/iam/examples/code (1)" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
+      <module name="iam" />
+      <working_directory value="$PROJECT_DIR$" />
+      <kind value="PACKAGE" />
+      <package value="github.com/wangzhen94/iam/examples/code" />
+      <directory value="$PROJECT_DIR$" />
+      <filePath value="$PROJECT_DIR$/examples/code/main.go" />
+      <method v="2" />
+    </configuration>
+    <configuration name="go build github.com/wangzhen94/iam/examples/code" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
+      <module name="myiam" />
+      <working_directory value="$PROJECT_DIR$" />
+      <kind value="PACKAGE" />
+      <package value="github.com/wangzhen94/iam/examples/code" />
+      <directory value="$PROJECT_DIR$" />
+      <filePath value="$PROJECT_DIR$/examples/code/main.go" />
+      <method v="2" />
+    </configuration>
+    <configuration default="true" type="GoTestRunConfiguration" factoryName="Go Test">
+      <module name="myiam" />
+      <working_directory value="$PROJECT_DIR$" />
+      <kind value="DIRECTORY" />
+      <package value="github.com/wangzhen94/myiam" />
+      <directory value="$PROJECT_DIR$" />
+      <filePath value="$PROJECT_DIR$" />
+      <framework value="gotest" />
+      <method v="2" />
+    </configuration>
+    <list>
+      <item itemvalue="Go Build.go build github.com/wangzhen94/iam/examples/code (1)" />
+      <item itemvalue="Go Build.go build github.com/wangzhen94/iam/examples/code" />
+      <item itemvalue="Go Build.go build github.com/wangzhen94/iam/cmd/iam-apiserver" />
+    </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Go Build.go build github.com/wangzhen94/iam/examples/code (1)" />
+        <item itemvalue="Go Build.go build github.com/wangzhen94/iam/examples/code" />
+        <item itemvalue="Go Build.go build github.com/wangzhen94/iam/cmd/iam-apiserver" />
+      </list>
+    </recent_temporary>
+  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
   <component name="VgoProject">
-    <integration-enabled>false</integration-enabled>
     <settings-migrated>true</settings-migrated>
   </component>
 </project>
