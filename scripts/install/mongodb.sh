@@ -20,17 +20,17 @@ EOF
 function iam::mongodb::install()
 {
   # 1. 配置 MongoDB Yum 源
-  echo ${LINUX_PASSWORD} | sudo -S bash -c "cat << 'EOF' > /etc/yum.repos.d/mongodb-org-5.0.repo
-[mongodb-org-5.0]
+  echo ${LINUX_PASSWORD} | sudo -S bash -c "cat << 'EOF' > /etc/yum.repos.d/mongodb-org-6.0.repo
+[mongodb-org-6.0]
 name=MongoDB Repository
-baseurl=https://repo.mongodb.org/yum/redhat/\$releasever/mongodb-org/5.0/x86_64/
+baseurl=https://repo.mongodb.org/yum/redhat/\$releasever/mongodb-org/6.0/x86_64/
 gpgcheck=1
 enabled=1
-gpgkey=https://www.mongodb.org/static/pgp/server-5.0.asc
+gpgkey=https://pgp.mongodb.com/server-6.0.asc
 EOF"
 
   # 2. 安装 MongoDB 和 MongoDB 客户端
-  iam::common::sudo "yum install -y mongodb-org"
+  iam::common::sudo "yum install -y mongodb-atlas"
 
 	# 3. 禁用 SELinux
 	echo ${LINUX_PASSWORD} | sudo -S setenforce 0 || true
@@ -51,7 +51,7 @@ db.createUser({user:"${MONGO_ADMIN_USERNAME}",pwd:"${MONGO_ADMIN_PASSWORD}",role
 db.auth("${MONGO_ADMIN_USERNAME}", "${MONGO_ADMIN_PASSWORD}")
 EOF
 
-	# 7. 创建 ${MONGO_USERNAME} 用户
+  # 7. 创建 ${MONGO_USERNAME} 用户
 	mongosh --quiet mongodb://${MONGO_ADMIN_USERNAME}:${MONGO_ADMIN_PASSWORD}@${MONGO_HOST}:${MONGO_PORT}/iam_analytics?authSource=admin << EOF
 use iam_analytics
 db.createUser({user:"${MONGO_USERNAME}",pwd:"${MONGO_PASSWORD}",roles:["dbOwner"]})
@@ -71,7 +71,7 @@ function iam::mongodb::uninstall()
   iam::common::sudo "systemctl disable mongodb"
   iam::common::sudo "yum -y remove mongodb-org"
   iam::common::sudo "rm -rf /var/lib/mongo"
-  iam::common::sudo "rm -f /etc/yum.repos.d/mongodb-10.5.repo"
+  iam::common::sudo "rm -f /etc/yum.repos.d/mongodb-*.repo"
   iam::common::sudo "rm -f /etc/mongod.conf"
   iam::common::sudo "rm -f /lib/systemd/system/mongod.service"
   iam::common::sudo "rm -f /tmp/mongodb-*.sock"

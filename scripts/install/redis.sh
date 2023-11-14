@@ -36,8 +36,8 @@ function iam::redis::install()
   echo ${LINUX_PASSWORD} | sudo -S sed -i '/^protected-mode/{s/yes/no/}' /etc/redis.conf
 
   # 3. 为了能够远程连上 Redis，需要执行以下命令关闭防火墙，并禁止防火墙开机启动（如果不需要远程连接，可忽略此步骤）
-  iam::common::sudo "systemctl stop firewalld.service"
-  iam::common::sudo "systemctl disable firewalld.service"
+  # iam::common::sudo "systemctl stop firewalld.service"
+  # iam::common::sudo "systemctl disable firewalld.service"
 
   # 4. 启动 Redis
   iam::common::sudo "redis-server /etc/redis.conf"
