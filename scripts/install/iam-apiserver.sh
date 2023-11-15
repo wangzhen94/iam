@@ -23,11 +23,11 @@ function iam::apiserver::install()
   pushd ${IAM_ROOT}
 
   # 1. 生成 CA 证书和私钥
-  ./scripts/gencerts.sh generate-iam-cert ${LOCAL_OUTPUT_ROOT}/cert
-  iam::common::sudo "cp ${LOCAL_OUTPUT_ROOT}/cert/ca* ${IAM_CONFIG_DIR}/cert"
+#  ./scripts/gencerts.sh generate-iam-cert ${LOCAL_OUTPUT_ROOT}/cert
+#  iam::common::sudo "cp ${LOCAL_OUTPUT_ROOT}/cert/ca* ${IAM_CONFIG_DIR}/cert"
 
-  ./scripts/gencerts.sh generate-iam-cert ${LOCAL_OUTPUT_ROOT}/cert iam-apiserver
-  iam::common::sudo "cp ${LOCAL_OUTPUT_ROOT}/cert/iam-apiserver*pem ${IAM_CONFIG_DIR}/cert"
+#  ./scripts/gencerts.sh generate-iam-cert ${LOCAL_OUTPUT_ROOT}/cert iam-apiserver
+#  iam::common::sudo "cp ${LOCAL_OUTPUT_ROOT}/cert/iam-apiserver*pem ${IAM_CONFIG_DIR}/cert"
 
   # 2. 构建 iam-apiserver
   make build BINS=iam-apiserver
