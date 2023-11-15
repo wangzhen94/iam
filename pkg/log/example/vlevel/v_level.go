@@ -5,7 +5,7 @@
 package main
 
 import (
-	"github.com/marmotedu/iam/pkg/log"
+	"github.com/wangzhen94/iam/pkg/log"
 )
 
 func main() {

@@ -4,7 +4,7 @@
 
 package v1
 
-//go:generate mockgen -self_package=github.com/marmotedu/iam/internal/apiserver/service/v1 -destination mock_service.go -package v1 github.com/marmotedu/iam/internal/apiserver/service/v1 Service,UserSrv,SecretSrv,PolicySrv
+//go:generate mockgen -self_package=github.com/wangzhen94/iam/internal/apiserver/service/v1 -destination mock_service.go -package v1 github.com/wangzhen94/iam/internal/apiserver/service/v1 Service,UserSrv,SecretSrv,PolicySrv
 
 import "github.com/wangzhen94/iam/internal/apiserver/store"
 

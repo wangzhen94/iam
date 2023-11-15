@@ -14,7 +14,6 @@ require (
 	github.com/marmotedu/api v1.6.3
 	github.com/marmotedu/component-base v1.6.2
 	github.com/marmotedu/errors v1.0.2
-	github.com/marmotedu/iam v1.7.0
 	github.com/marmotedu/log v0.0.1
 	github.com/novalagung/gubrak v1.0.0
 	github.com/satori/go.uuid v1.2.1-0.20181028125025-b2ce2384e17b

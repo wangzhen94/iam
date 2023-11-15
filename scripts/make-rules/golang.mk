@@ -41,7 +41,7 @@ ifeq (${BINS},)
   $(error Could not determine BINS, set ROOT_DIR or run in source dir)
 endif
 
-EXCLUDE_TESTS=github.com/marmotedu/iam/test github.com/marmotedu/iam/pkg/log github.com/marmotedu/iam/third_party github.com/marmotedu/iam/internal/pump/storage github.com/marmotedu/iam/internal/pump github.com/marmotedu/iam/internal/pkg/logger
+EXCLUDE_TESTS=github.com/wangzhen94/iam/test github.com/wangzhen94/iam/pkg/log github.com/wangzhen94/iam/third_party github.com/wangzhen94/iam/internal/pump/storage github.com/wangzhen94/iam/internal/pump github.com/wangzhen94/iam/internal/pkg/logger
 
 .PHONY: go.build.verify
 go.build.verify:
