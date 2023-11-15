@@ -30,6 +30,7 @@ func installController(g *gin.Engine) *gin.Engine {
 
 		userV1.POST("", userController.Create)
 		userV1.DELETE("/:name", userController.Delete)
+		userV1.GET("", userController.List)
 
 	}
 

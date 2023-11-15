@@ -7,9 +7,7 @@
     <option name="rewriteBookmarkType" value="true" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="17ab7039-1674-43f1-b769-f292d7ac01c1" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/internal/apiserver/controller/v1/user/create.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/apiserver/controller/v1/user/create.go" afterDir="false" />
-    </list>
+    <list default="true" id="17ab7039-1674-43f1-b769-f292d7ac01c1" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
