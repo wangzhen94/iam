@@ -4,6 +4,7 @@ import (
 	"github.com/wangzhen94/iam/internal/apiserver/config"
 	"github.com/wangzhen94/iam/internal/apiserver/options"
 	"github.com/wangzhen94/iam/pkg/app"
+	"github.com/wangzhen94/iam/pkg/log"
 )
 
 const commandDesc = `The IAM API server validates and configures data
@@ -16,8 +17,8 @@ func NewApp(basename string) *app.App {
 		basename,
 		app.WithOptions(opts),
 		app.WithDescription(commandDesc),
-		//app.WithDefaultValidArgs(),
-		//app.WithRunFunc(run(opts)),
+		app.WithDefaultValidArgs(),
+		app.WithRunFunc(run(opts)),
 	)
 
 	return application
@@ -25,8 +26,8 @@ func NewApp(basename string) *app.App {
 
 func run(opts *options.Options) app.RunFunc {
 	return func(basename string) error {
-		//log.Init(opts.Log)
-		//defer log.Flush()
+		log.Init(opts.Log)
+		defer log.Flush()
 		//
 		cfg, err := config.CreateConfigFromOptions(opts)
 		if err != nil {

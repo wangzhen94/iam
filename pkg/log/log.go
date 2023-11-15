@@ -87,7 +87,7 @@ func (l *infoLogger) Info(msg string, fields ...Field) {
 }
 
 func (l *infoLogger) Infof(format string, args ...interface{}) {
-	if checkedEntry := l.log.Check(l.level, fmt.Sprintf(format, args)); checkedEntry != nil {
+	if checkedEntry := l.log.Check(l.level, fmt.Sprintf(format, args...)); checkedEntry != nil {
 		checkedEntry.Write()
 	}
 }

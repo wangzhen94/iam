@@ -61,7 +61,7 @@ func defaultMiddlewares() map[string]gin.HandlerFunc {
 		"nocache":  NoCache,
 		//"cors":      Cors(),
 		"requestid": RequestID(),
-		//"logger":    Logger(),
+		"logger":    Logger(),
 		//"dump":      gindump.Dump(),
 	}
 }
