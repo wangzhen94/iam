@@ -20,12 +20,14 @@ func installController(g *gin.Engine) *gin.Engine {
 
 	g.GET("/user/:name", func(c *gin.Context) {
 		name := c.Params.ByName("name")
+		tp := c.Query("type")
 		if err := getUser(name); err != nil {
 			core.WriteResponse(c, err, nil)
 			return
 		}
 
-		core.WriteResponse(c, nil, map[string]string{"email": name + "@foxmail.com"})
+		core.WriteResponse(c, nil, map[string]string{"email": name + "@foxmail.com",
+			"type": tp})
 	})
 
 	return g
@@ -39,5 +41,9 @@ func getUser(name string) error {
 }
 
 func queryDataBase(name string) error {
-	return errors.WithCode(code.ErrDatabase, "user '%s' not found")
+	if "wang" == name {
+		return nil
+	} else {
+		return errors.WithCode(code.ErrDatabase, "user '%s' not found", name)
+	}
 }
