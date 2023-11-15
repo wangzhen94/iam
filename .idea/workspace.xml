@@ -8,17 +8,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="17ab7039-1674-43f1-b769-f292d7ac01c1" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/internal/apiserver/controller/v1/user/delete.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/apiserver/controller/v1/user/create.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/apiserver/controller/v1/user/create.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/apiserver/options/options.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/apiserver/options/options.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/apiserver/options/validation.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/apiserver/options/validation.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/apiserver/router.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/apiserver/router.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/apiserver/service/v1/user.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/apiserver/service/v1/user.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/apiserver/store/mysql/user.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/apiserver/store/mysql/user.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/pkg/options/grpc.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/pkg/options/grpc.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/pkg/server/config.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/pkg/server/config.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/install/iam-apiserver.sh" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/install/iam-apiserver.sh" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
