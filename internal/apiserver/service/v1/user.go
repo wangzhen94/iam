@@ -6,6 +6,9 @@ package v1
 
 import (
 	"context"
+	"github.com/marmotedu/errors"
+	"github.com/wangzhen94/iam/internal/pkg/code"
+	"github.com/wangzhen94/iam/pkg/log"
 	"regexp"
 	"sync"
 
@@ -43,7 +46,7 @@ func newUsers(srv *service) *userService {
 func (u *userService) List(ctx context.Context, opts metav1.ListOptions) (*v1.UserList, error) {
 	users, err := u.store.Users().List(ctx, opts)
 	if err != nil {
-		//log.L(ctx).Errorf("list users from storage failed: %s", err.Error())
+		log.L(ctx).Errorf("list users from storage failed: %s", err.Error())
 
 		return nil, nil
 	}
@@ -99,7 +102,7 @@ func (u *userService) List(ctx context.Context, opts metav1.ListOptions) (*v1.Us
 		infos = append(infos, info.(*v1.User))
 	}
 
-	//log.L(ctx).Debugf("get %d users from backend storage.", len(infos))
+	log.L(ctx).Debugf("get %d users from backend storage.", len(infos))
 
 	return &v1.UserList{ListMeta: users.ListMeta, Items: infos}, nil
 }
@@ -138,10 +141,10 @@ func (u *userService) ListWithBadPerformance(ctx context.Context, opts metav1.Li
 func (u *userService) Create(ctx context.Context, user *v1.User, opts metav1.CreateOptions) error {
 	if err := u.store.Users().Create(ctx, user, opts); err != nil {
 		if match, _ := regexp.MatchString("Duplicate entry '.*' for key 'idx_name'", err.Error()); match {
-			//return errors.WithCode(code.ErrUserAlreadyExist, err.Error())
+			return errors.WithCode(code.ErrUserAlreadyExist, err.Error())
 		}
 
-		//return errors.WithCode(code.ErrDatabase, err.Error())
+		return errors.WithCode(code.ErrDatabase, err.Error())
 	}
 
 	return nil
@@ -149,7 +152,7 @@ func (u *userService) Create(ctx context.Context, user *v1.User, opts metav1.Cre
 
 func (u *userService) DeleteCollection(ctx context.Context, usernames []string, opts metav1.DeleteOptions) error {
 	if err := u.store.Users().DeleteCollection(ctx, usernames, opts); err != nil {
-		//return errors.WithCode(code.ErrDatabase, err.Error())
+		return errors.WithCode(code.ErrDatabase, err.Error())
 	}
 
 	return nil

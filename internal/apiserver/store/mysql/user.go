@@ -8,6 +8,7 @@ import (
 	"github.com/marmotedu/errors"
 	"github.com/wangzhen94/iam/internal/pkg/code"
 	"github.com/wangzhen94/iam/internal/pkg/util/gormutil"
+	"github.com/wangzhen94/iam/pkg/log"
 	"gorm.io/gorm"
 )
 
@@ -35,6 +36,7 @@ func (u *users) Delete(ctx context.Context, username string, opts metav1.DeleteO
 
 	err := u.db.Where("name = ?", username).Delete(&v1.User{}).Error
 	if err != nil && !errors.Is(err, gorm.ErrRecordNotFound) {
+		log.Warnf("your del user %s not exist.", username)
 		return errors.WithCode(code.ErrDatabase, err.Error())
 	}
 

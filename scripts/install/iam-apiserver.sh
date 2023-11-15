@@ -81,6 +81,8 @@ function iam::apiserver::status()
  fi
 }
 
-if [[ "$*" =~ iam::apiserver:: ]];then
-  eval $*
-fi
+#if [[ "$*" =~ iam::apiserver:: ]];then
+#  eval $*
+#fi
+
+iam::apiserver::install

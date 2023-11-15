@@ -43,7 +43,7 @@ func NewOptions() *Options {
 func (o *Options) Flags() (fss cliflag.NamedFlagSets) {
 	o.GenericServerRunOptions.AddFlags(fss.FlagSet("generic"))
 	//o.JwtOptions.AddFlags(fss.FlagSet("jwt"))
-	//o.GRPCOptions.AddFlags(fss.FlagSet("grpc"))
+	o.GRPCOptions.AddFlags(fss.FlagSet("grpc"))
 	o.MySQLOptions.AddFlags(fss.FlagSet("mysql"))
 	o.RedisOptions.AddFlags(fss.FlagSet("redis"))
 	//o.FeatureOptions.AddFlags(fss.FlagSet("features"))
