@@ -2,9 +2,14 @@ package apiserver
 
 import (
 	"context"
+	"fmt"
 	"github.com/wangzhen94/iam/internal/apiserver/config"
+	"github.com/wangzhen94/iam/internal/apiserver/store"
+	"github.com/wangzhen94/iam/internal/apiserver/store/mysql"
 	genericoptions "github.com/wangzhen94/iam/internal/pkg/options"
 	"github.com/wangzhen94/iam/pkg/storage"
+	"google.golang.org/grpc"
+	"google.golang.org/grpc/reflection"
 )
 
 import (
@@ -13,8 +18,8 @@ import (
 
 type apiServer struct {
 	//gs           *shutdown.GracefulShutdown
-	redisOptions *genericoptions.RedisOptions
-	//gRPCAPIServer    *grpcAPIServer
+	redisOptions     *genericoptions.RedisOptions
+	gRPCAPIServer    *grpcAPIServer
 	genericAPIServer *genericapiserver.GenericAPIServer
 }
 
@@ -27,7 +32,7 @@ func createAPIServer(cfg *config.Config) (*apiServer, error) {
 		return nil, err
 	}
 
-	//extraConfig, err := buildExtraConfig(cfg)
+	extraConfig, err := buildExtraConfig(cfg)
 	if err != nil {
 		return nil, err
 	}
@@ -36,7 +41,7 @@ func createAPIServer(cfg *config.Config) (*apiServer, error) {
 	if err != nil {
 		return nil, err
 	}
-	//extraServer, err := extraConfig.complete().New()
+	extraServer, err := extraConfig.complete().New()
 	if err != nil {
 		return nil, err
 	}
@@ -45,7 +50,7 @@ func createAPIServer(cfg *config.Config) (*apiServer, error) {
 		//gs:               gs,
 		redisOptions:     cfg.RedisOptions,
 		genericAPIServer: genericServer,
-		//gRPCAPIServer:    extraServer,
+		gRPCAPIServer:    extraServer,
 	}
 
 	return server, nil
@@ -109,4 +114,50 @@ func (s *apiServer) initRedisStore() {
 
 	// try to connect to redis
 	go storage.ConnectToRedis(ctx, config)
+}
+
+// ExtraConfig defines extra configuration for the iam-apiserver.
+type ExtraConfig struct {
+	Addr       string
+	MaxMsgSize int
+	//ServerCert   genericoptions.GeneratableKeyCert
+	mysqlOptions *genericoptions.MySQLOptions
+	// etcdOptions      *genericoptions.EtcdOptions
+}
+
+// nolint: unparam
+func buildExtraConfig(cfg *config.Config) (*ExtraConfig, error) {
+	return &ExtraConfig{
+		Addr:       fmt.Sprintf("%s:%d", cfg.GRPCOptions.BindAddress, cfg.GRPCOptions.BindPort),
+		MaxMsgSize: cfg.GRPCOptions.MaxMsgSize,
+		//ServerCert:   cfg.SecureServing.ServerCert,
+		mysqlOptions: cfg.MySQLOptions,
+		// etcdOptions:      cfg.EtcdOptions,
+	}, nil
+}
+
+type completedExtraConfig struct {
+	*ExtraConfig
+}
+
+func (c *ExtraConfig) complete() *completedExtraConfig {
+	if c.Addr == "" {
+		c.Addr = "127.0.0.1:8081"
+	}
+
+	return &completedExtraConfig{c}
+}
+
+func (c *completedExtraConfig) New() (*grpcAPIServer, error) {
+
+	opts := []grpc.ServerOption{grpc.MaxRecvMsgSize(c.MaxMsgSize)}
+	grpcServer := grpc.NewServer(opts...)
+
+	storeIns, _ := mysql.GetMySQLFactoryOr(c.mysqlOptions)
+	// storeIns, _ := etcd.GetEtcdFactoryOr(c.etcdOptions, nil)
+	store.SetClient(storeIns)
+
+	reflection.Register(grpcServer)
+
+	return &grpcAPIServer{grpcServer, c.Addr}, nil
 }
