@@ -8,30 +8,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="17ab7039-1674-43f1-b769-f292d7ac01c1" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/internal/apiserver/controller/v1/secret/crete.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/internal/apiserver/controller/v1/secret/delete.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/internal/apiserver/controller/v1/secret/get.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/internal/apiserver/controller/v1/secret/list.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/internal/apiserver/controller/v1/secret/secret.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/internal/apiserver/controller/v1/secret/update.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/internal/apiserver/service/v1/secret.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/internal/apiserver/store/mysql/secret.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/internal/apiserver/store/secret.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/examples/code/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/examples/code/main.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/apiserver/controller/v1/secret/.pk" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/apiserver/controller/v1/user/create.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/apiserver/controller/v1/user/create.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/apiserver/controller/v1/user/create_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/apiserver/controller/v1/user/create_test.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/apiserver/controller/v1/user/delete_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/apiserver/controller/v1/user/delete_test.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/apiserver/controller/v1/user/get_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/apiserver/controller/v1/user/get_test.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/apiserver/controller/v1/user/list_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/apiserver/controller/v1/user/list_test.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/apiserver/controller/v1/user/update_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/apiserver/controller/v1/user/update_test.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/apiserver/router.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/apiserver/router.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/apiserver/service/v1/service.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/apiserver/service/v1/service.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/apiserver/store/mysql/mysql.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/apiserver/store/mysql/mysql.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/apiserver/store/mysql/user.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/apiserver/store/mysql/user.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/apiserver/store/store.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/apiserver/store/store.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mock_service.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/apiserver/service/v1/mock_service.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/apiserver/controller/v1/user/create_test.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/apiserver/controller/v1/user/delete_test.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/apiserver/controller/v1/user/get_test.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/apiserver/controller/v1/user/list_test.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/apiserver/controller/v1/user/update_test.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/apiserver/controller/v1/user/user_test.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/apiserver/service/v1/mock_service.go" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -193,16 +177,5 @@
   </component>
   <component name="VgoProject">
     <settings-migrated>true</settings-migrated>
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="DlvLineBreakpoint">
-          <url>file://$PROJECT_DIR$/internal/apiserver/controller/v1/user/create_test.go</url>
-          <line>53</line>
-          <option name="timeStamp" value="1" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
 </project>
