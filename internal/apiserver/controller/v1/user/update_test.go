@@ -1,10 +1,10 @@
 package user
 
 import (
-	"testing"
-
 	"github.com/gin-gonic/gin"
 	v1 "github.com/marmotedu/api/apiserver/v1"
+	srvv1 "github.com/wangzhen94/iam/internal/apiserver/service/v1"
+	"testing"
 )
 
 func TestUserController_Update(t *testing.T) {

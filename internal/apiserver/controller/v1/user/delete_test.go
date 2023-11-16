@@ -1,9 +1,9 @@
 package user
 
 import (
-	"testing"
-
 	"github.com/gin-gonic/gin"
+	srvv1 "github.com/wangzhen94/iam/internal/apiserver/service/v1"
+	"testing"
 )
 
 func TestUserController_Delete(t *testing.T) {

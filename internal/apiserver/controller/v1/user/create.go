@@ -27,11 +27,11 @@ func (u *UserController) Create(c *gin.Context) {
 	s, _ := json.Marshal(&r)
 	log.Infof("create user: %s", s)
 
-	//if errs := r.Validate(); len(errs) != 0 {
-	//	core.WriteResponse(c, errors.WithCode(code.ErrValidation, errs.ToAggregate().Error()), nil)
-	//
-	//	return
-	//}
+	if errs := r.Validate(); len(errs) != 0 {
+		core.WriteResponse(c, errors.WithCode(code.ErrValidation, errs.ToAggregate().Error()), nil)
+
+		return
+	}
 
 	r.Password, _ = auth.Encrypt(r.Password)
 	r.Status = 1

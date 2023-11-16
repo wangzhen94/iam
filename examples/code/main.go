@@ -5,6 +5,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/marmotedu/component-base/pkg/core"
 	"github.com/marmotedu/errors"
+	"time"
 
 	"github.com/wangzhen94/iam/internal/pkg/code"
 	"github.com/wangzhen94/iam/pkg/log"
@@ -26,16 +27,25 @@ func processData(v interface{}) {
 }
 
 func main() {
+	now := time.Now()
 
-	d := Data{Name: "John"}
+	time.Sleep(1000)
 
-	p := &d
+	after := time.Now()
 
-	// 传递指针
-	processData(p.Name)
+	a := after.UnixNano() - now.UnixNano()
+	fmt.Println(a)
 
-	// 传递值
-	processData(p.Name)
+	//
+	//d := Data{Name: "John"}
+	//
+	//p := &d
+	//
+	//// 传递指针
+	//processData(p.Name)
+	//
+	//// 传递值
+	//processData(p.Name)
 
 	//print("GET", "/user/list", "userList", 3)
 	//print("OPTION", "/user/kkk", "userList", 3)
