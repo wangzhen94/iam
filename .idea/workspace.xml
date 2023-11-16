@@ -9,13 +9,7 @@
   <component name="ChangeListManager">
     <list default="true" id="17ab7039-1674-43f1-b769-f292d7ac01c1" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/apiserver/controller/v1/user/create_test.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/apiserver/controller/v1/user/delete_test.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/apiserver/controller/v1/user/get_test.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/apiserver/controller/v1/user/list_test.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/apiserver/controller/v1/user/update_test.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/apiserver/controller/v1/user/user_test.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/apiserver/service/v1/mock_service.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/go.mod" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -86,7 +80,7 @@
       <recent name="$PROJECT_DIR$/internal/apiserver" />
     </key>
   </component>
-  <component name="RunManager" selected="Go Test.TestUserController_Create in github.com/wangzhen94/iam/internal/apiserver/controller/v1/user">
+  <component name="RunManager" selected="Go Build.go build github.com/wangzhen94/iam/examples/code (1)">
     <configuration default="true" type="GoApplicationRunConfiguration" factoryName="Go Application">
       <module name="myiam" />
       <working_directory value="$PROJECT_DIR$" />
@@ -163,9 +157,9 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Go Test.TestUserController_Create in github.com/wangzhen94/iam/internal/apiserver/controller/v1/user" />
         <item itemvalue="Go Build.go build github.com/wangzhen94/iam/examples/code (1)" />
         <item itemvalue="Go Build.go build github.com/wangzhen94/iam/cmd/iam-apiserver (1)" />
+        <item itemvalue="Go Test.TestUserController_Create in github.com/wangzhen94/iam/internal/apiserver/controller/v1/user" />
         <item itemvalue="Go Build.go build github.com/wangzhen94/iam/pkg/log/example/context" />
         <item itemvalue="Go Build.go build github.com/wangzhen94/iam/examples/code" />
       </list>
@@ -174,6 +168,17 @@
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
   <component name="VgoProject">
     <settings-migrated>true</settings-migrated>
