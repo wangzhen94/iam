@@ -42,6 +42,7 @@ func (u *UserController) Update(c *gin.Context) {
 	}
 
 	if errs := user.Validate(); len(errs) != 0 {
+		log.Errorf("validate failed %s .", errs.ToAggregate().Error())
 		core.WriteResponse(c, errors.WithCode(code.ErrValidation, errs.ToAggregate().Error()), nil)
 
 		return
