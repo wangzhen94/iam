@@ -2,8 +2,8 @@ package apiserver
 
 import (
 	"github.com/gin-gonic/gin"
+	"github.com/marmotedu/component-base/pkg/core"
 	"github.com/marmotedu/errors"
-	"github.com/wangzhen94/iam/internal/apiserver/controller/v1/secret"
 	"github.com/wangzhen94/iam/internal/apiserver/controller/v1/user"
 	"github.com/wangzhen94/iam/internal/apiserver/store/mysql"
 	"github.com/wangzhen94/iam/internal/pkg/code"
@@ -23,29 +23,30 @@ func installController(g *gin.Engine) *gin.Engine {
 	storeIns, _ := mysql.GetMySQLFactoryOr(nil)
 
 	v1 := g.Group("/v1")
+
 	{
-		{
-			userV1 := v1.Group("/user")
-			userController := user.NewUserController(storeIns)
+		userV1 := v1.Group("/user")
+		userController := user.NewUserController(storeIns)
 
-			userV1.POST("", userController.Create)
-			userV1.DELETE("/:name", userController.Delete)
-			userV1.GET("", userController.List)
-			userV1.PUT("", userController.Update)
-			userV1.GET("/:name", userController.Get)
-		}
-
-		{
-			secretV1 := v1.Group("/secret")
-			secretController := secret.NewSecretController(storeIns)
-			secretV1.GET("/:name", secretController.Get)
-			secretV1.POST("", secretController.Create)
-			secretV1.PUT("/:name", secretController.Get)
-			secretV1.GET("", secretController.List)
-			secretV1.DELETE("", secretController.Delete)
-		}
+		userV1.POST("", userController.Create)
+		userV1.DELETE("/:name", userController.Delete)
+		userV1.GET("", userController.List)
+		userV1.PUT("", userController.Update)
+		userV1.GET("/:name", userController.Get)
 
 	}
+
+	g.GET("/user/:name", func(c *gin.Context) {
+		name := c.Params.ByName("name")
+		tp := c.Query("type")
+		if err := getUser(name); err != nil {
+			core.WriteResponse(c, err, nil)
+			return
+		}
+
+		core.WriteResponse(c, nil, map[string]string{"email": name + "@foxmail.com",
+			"type": tp})
+	})
 
 	return g
 }

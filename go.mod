@@ -9,6 +9,7 @@ require (
 	github.com/gin-contrib/pprof v1.3.0
 	github.com/gin-gonic/gin v1.7.4
 	github.com/go-redis/redis/v7 v7.4.1
+	github.com/golang/mock v1.6.0
 	github.com/gosuri/uitable v0.0.4
 	github.com/marmotedu/api v1.6.3
 	github.com/marmotedu/component-base v1.6.2

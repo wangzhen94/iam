@@ -11,7 +11,7 @@ var client Factory
 // Factory defines the iam platform storage interface.
 type Factory interface {
 	Users() UserStore
-	Secrets() SecretStore
+	//Secrets() SecretStore
 	//Policies() PolicyStore
 	//PolicyAudits() PolicyAuditStore
 	Close() error
