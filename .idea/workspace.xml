@@ -26,6 +26,7 @@
       <change beforePath="$PROJECT_DIR$/internal/apiserver/controller/v1/user/get_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/apiserver/controller/v1/user/get_test.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/internal/apiserver/controller/v1/user/list_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/apiserver/controller/v1/user/list_test.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/internal/apiserver/controller/v1/user/update_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/apiserver/controller/v1/user/update_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/apiserver/router.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/apiserver/router.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/internal/apiserver/service/v1/service.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/apiserver/service/v1/service.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/internal/apiserver/store/mysql/mysql.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/apiserver/store/mysql/mysql.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/internal/apiserver/store/mysql/user.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/apiserver/store/mysql/user.go" afterDir="false" />
