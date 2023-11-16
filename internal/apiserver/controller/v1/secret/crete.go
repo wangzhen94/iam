@@ -9,7 +9,6 @@ import (
 	"github.com/marmotedu/component-base/pkg/util/idutil"
 	"github.com/marmotedu/errors"
 	"github.com/wangzhen94/iam/internal/pkg/code"
-	"github.com/wangzhen94/iam/internal/pkg/middleware"
 	"github.com/wangzhen94/iam/pkg/log"
 )
 
@@ -30,7 +29,8 @@ func (s *SecretController) Create(c *gin.Context) {
 		return
 	}
 
-	username := c.GetString(middleware.UsernameKey)
+	//username := c.GetString(middleware.UsernameKey)
+	username := c.Query("username")
 
 	log.Infof("user: %s create secret %s", username, req)
 	secrets, err := s.srv.Secrets().List(c, username, metav1.ListOptions{
