@@ -10,7 +10,32 @@ import (
 	"github.com/wangzhen94/iam/pkg/log"
 )
 
+type Data struct {
+	Name string
+}
+
+func processData(v interface{}) {
+	switch val := v.(type) {
+	case *string:
+		fmt.Printf("Received pointer: %s\n", val)
+	case string:
+		fmt.Printf("Received value: %s\n", val)
+	default:
+		fmt.Println("Unknown type")
+	}
+}
+
 func main() {
+
+	d := Data{Name: "John"}
+
+	p := &d
+
+	// 传递指针
+	processData(p.Name)
+
+	// 传递值
+	processData(p.Name)
 
 	//print("GET", "/user/list", "userList", 3)
 	//print("OPTION", "/user/kkk", "userList", 3)
