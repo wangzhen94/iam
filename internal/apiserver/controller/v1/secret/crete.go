@@ -10,6 +10,7 @@ import (
 	"github.com/marmotedu/errors"
 	"github.com/wangzhen94/iam/internal/pkg/code"
 	"github.com/wangzhen94/iam/internal/pkg/middleware"
+	"github.com/wangzhen94/iam/pkg/log"
 )
 
 const maxSecretCount = 10
@@ -31,6 +32,7 @@ func (s *SecretController) Create(c *gin.Context) {
 
 	username := c.GetString(middleware.UsernameKey)
 
+	log.Infof("user: %s create secret %s", username, req)
 	secrets, err := s.srv.Secrets().List(c, username, metav1.ListOptions{
 		Offset: pointer.ToInt64(0),
 		Limit:  pointer.ToInt64(-1),
