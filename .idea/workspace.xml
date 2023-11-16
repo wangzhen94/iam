@@ -9,7 +9,7 @@
   <component name="ChangeListManager">
     <list default="true" id="17ab7039-1674-43f1-b769-f292d7ac01c1" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/apiserver/controller/v1/user/update.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/apiserver/controller/v1/user/update.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/go.mod" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -48,36 +48,36 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;DefaultGoTemplateProperty&quot;: &quot;Go File&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.go.formatter.settings.were.checked&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.go.migrated.go.modules.settings&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.go.modules.go.list.on.any.changes.was.set&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;go.import.settings.migrated&quot;: &quot;true&quot;,
-    &quot;go.sdk.automatically.set&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/Users/wangzhen/go/src/github.com/wangzhen94/iam/internal/pkg/logger&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;editor.preferences.tabs&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "DefaultGoTemplateProperty": "Go File",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.go.formatter.settings.were.checked": "true",
+    "RunOnceActivity.go.migrated.go.modules.settings": "true",
+    "RunOnceActivity.go.modules.go.list.on.any.changes.was.set": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "go.import.settings.migrated": "true",
+    "go.sdk.automatically.set": "true",
+    "last_opened_file_path": "/Users/wangzhen/go/src/github.com/wangzhen94/iam/internal/apiserver/controller/v1/secret",
+    "node.js.detected.package.eslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "settings.editor.selected.configurable": "editor.preferences.tabs"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/internal/apiserver/controller/v1/secret" />
       <recent name="$PROJECT_DIR$/internal/pkg/logger" />
       <recent name="$PROJECT_DIR$/init" />
       <recent name="$PROJECT_DIR$/internal/pkg/options" />
       <recent name="$PROJECT_DIR$" />
-      <recent name="$PROJECT_DIR$/scripts/make-rules" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/internal/apiserver/service/v1" />
       <recent name="$PROJECT_DIR$/internal/pkg/util/gormutil" />
       <recent name="$PROJECT_DIR$/internal/pkg/util/gormm" />
       <recent name="$PROJECT_DIR$/internal/pkg/util/gorm" />
       <recent name="$PROJECT_DIR$/internal/apiserver" />
-      <recent name="$PROJECT_DIR$/scripts/lib" />
     </key>
   </component>
   <component name="RunManager" selected="Go Build.go build github.com/wangzhen94/iam/examples/code (1)">
@@ -92,15 +92,6 @@
     </configuration>
     <configuration name="go build github.com/wangzhen94/iam/cmd/iam-apiserver (1)" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
       <module name="iam" />
-      <working_directory value="$PROJECT_DIR$" />
-      <kind value="PACKAGE" />
-      <package value="github.com/wangzhen94/iam/cmd/iam-apiserver" />
-      <directory value="$PROJECT_DIR$" />
-      <filePath value="$PROJECT_DIR$/cmd/iam-apiserver/apiserver.go" />
-      <method v="2" />
-    </configuration>
-    <configuration name="go build github.com/wangzhen94/iam/cmd/iam-apiserver" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
-      <module name="myiam" />
       <working_directory value="$PROJECT_DIR$" />
       <kind value="PACKAGE" />
       <package value="github.com/wangzhen94/iam/cmd/iam-apiserver" />
@@ -135,6 +126,18 @@
       <filePath value="$PROJECT_DIR$/pkg/log/example/context/main.go" />
       <method v="2" />
     </configuration>
+    <configuration name="TestUserController_Create in github.com/wangzhen94/iam/internal/apiserver/controller/v1/user" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
+      <module name="iam" />
+      <working_directory value="$PROJECT_DIR$/internal/apiserver/controller/v1/user" />
+      <root_directory value="$PROJECT_DIR$" />
+      <kind value="PACKAGE" />
+      <package value="github.com/wangzhen94/iam/internal/apiserver/controller/v1/user" />
+      <directory value="$PROJECT_DIR$" />
+      <filePath value="$PROJECT_DIR$" />
+      <framework value="gotest" />
+      <pattern value="^\QTestUserController_Create\E$" />
+      <method v="2" />
+    </configuration>
     <configuration default="true" type="GoTestRunConfiguration" factoryName="Go Test">
       <module name="myiam" />
       <working_directory value="$PROJECT_DIR$" />
@@ -150,21 +153,32 @@
       <item itemvalue="Go Build.go build github.com/wangzhen94/iam/examples/code (1)" />
       <item itemvalue="Go Build.go build github.com/wangzhen94/iam/pkg/log/example/context" />
       <item itemvalue="Go Build.go build github.com/wangzhen94/iam/examples/code" />
-      <item itemvalue="Go Build.go build github.com/wangzhen94/iam/cmd/iam-apiserver" />
+      <item itemvalue="Go Test.TestUserController_Create in github.com/wangzhen94/iam/internal/apiserver/controller/v1/user" />
     </list>
     <recent_temporary>
       <list>
         <item itemvalue="Go Build.go build github.com/wangzhen94/iam/examples/code (1)" />
         <item itemvalue="Go Build.go build github.com/wangzhen94/iam/cmd/iam-apiserver (1)" />
+        <item itemvalue="Go Test.TestUserController_Create in github.com/wangzhen94/iam/internal/apiserver/controller/v1/user" />
         <item itemvalue="Go Build.go build github.com/wangzhen94/iam/pkg/log/example/context" />
         <item itemvalue="Go Build.go build github.com/wangzhen94/iam/examples/code" />
-        <item itemvalue="Go Build.go build github.com/wangzhen94/iam/cmd/iam-apiserver" />
       </list>
     </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
   <component name="VgoProject">
     <settings-migrated>true</settings-migrated>
