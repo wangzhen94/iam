@@ -177,7 +177,7 @@ func (u *userService) Get(ctx context.Context, username string, opts metav1.GetO
 
 func (u *userService) Update(ctx context.Context, user *v1.User, opts metav1.UpdateOptions) error {
 	if err := u.store.Users().Update(ctx, user, opts); err != nil {
-		//return errors.WithCode(code.ErrDatabase, err.Error())
+		return errors.WithCode(code.ErrDatabase, err.Error())
 	}
 
 	return nil
@@ -186,7 +186,7 @@ func (u *userService) Update(ctx context.Context, user *v1.User, opts metav1.Upd
 func (u *userService) ChangePassword(ctx context.Context, user *v1.User) error {
 	// Save changed fields.
 	if err := u.store.Users().Update(ctx, user, metav1.UpdateOptions{}); err != nil {
-		//return errors.WithCode(code.ErrDatabase, err.Error())
+		return errors.WithCode(code.ErrDatabase, err.Error())
 	}
 
 	return nil

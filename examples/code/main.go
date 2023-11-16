@@ -11,6 +11,7 @@ import (
 )
 
 func main() {
+
 	//print("GET", "/user/list", "userList", 3)
 	//print("OPTION", "/user/kkk", "userList", 3)
 	r := gin.Default()

@@ -8,7 +8,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="17ab7039-1674-43f1-b769-f292d7ac01c1" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/internal/apiserver/controller/v1/user/update.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/apiserver/service/v1/user.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/apiserver/service/v1/user.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -79,7 +81,7 @@
       <recent name="$PROJECT_DIR$/scripts/lib" />
     </key>
   </component>
-  <component name="RunManager" selected="Go Build.go build github.com/wangzhen94/iam/cmd/iam-apiserver (1)">
+  <component name="RunManager" selected="Go Build.go build github.com/wangzhen94/iam/examples/code (1)">
     <configuration default="true" type="GoApplicationRunConfiguration" factoryName="Go Application">
       <module name="myiam" />
       <working_directory value="$PROJECT_DIR$" />
@@ -153,9 +155,9 @@
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Go Build.go build github.com/wangzhen94/iam/examples/code (1)" />
         <item itemvalue="Go Build.go build github.com/wangzhen94/iam/cmd/iam-apiserver (1)" />
         <item itemvalue="Go Build.go build github.com/wangzhen94/iam/pkg/log/example/context" />
-        <item itemvalue="Go Build.go build github.com/wangzhen94/iam/examples/code (1)" />
         <item itemvalue="Go Build.go build github.com/wangzhen94/iam/examples/code" />
         <item itemvalue="Go Build.go build github.com/wangzhen94/iam/cmd/iam-apiserver" />
       </list>
