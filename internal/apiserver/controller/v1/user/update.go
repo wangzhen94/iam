@@ -29,6 +29,12 @@ func (u *UserController) Update(c *gin.Context) {
 		return
 	}
 
+	err = checkOldPassword(user, oldPassword)
+	if err != nil {
+		core.WriteResponse(c, errors.WithCode(code.ErrPasswordIncorrect, err.Error()), nil)
+
+		return
+	}
 	user.Nickname = r.Nickname
 	user.Email = r.Email
 	user.Phone = r.Phone
@@ -42,12 +48,7 @@ func (u *UserController) Update(c *gin.Context) {
 		return
 	}
 
-	err = changePassword(user, r, oldPassword)
-	if err != nil {
-		core.WriteResponse(c, errors.WithCode(code.ErrPasswordIncorrect, err.Error()), nil)
-
-		return
-	}
+	user.Password, _ = auth.Encrypt(user.Password)
 
 	if err := u.srv.Users().Update(c, user, metav1.UpdateOptions{}); err != nil {
 		core.WriteResponse(c, err, nil)
@@ -58,12 +59,15 @@ func (u *UserController) Update(c *gin.Context) {
 	core.WriteResponse(c, nil, user)
 }
 
-func changePassword(db *v1.User, req *v1.User, oldPassword string) (err error) {
-	if err := db.Compare(oldPassword); err != nil {
+func checkOldPassword(user *v1.User, oldPassword string) error {
+	if oldPassword == "" {
+		return nil
+	}
+
+	log.Infof("old password %s, db password %s", oldPassword, user.Password)
+	if err := user.Compare(oldPassword); err != nil {
 		return errors.WithCode(code.ErrPasswordIncorrect, err.Error())
 	}
 
-	db.Password, err = auth.Encrypt(req.Password)
-
-	return err
+	return nil
 }
