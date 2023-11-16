@@ -33,17 +33,18 @@ func (u *UserController) Update(c *gin.Context) {
 	user.Email = r.Email
 	user.Phone = r.Phone
 	user.Extend = r.Extend
-
-	err = changePassword(user, r, oldPassword)
-	if err != nil {
-		core.WriteResponse(c, errors.WithCode(code.ErrPasswordIncorrect, err.Error()), nil)
-
-		return
-	}
+	user.Password = r.Password
 
 	if errs := user.Validate(); len(errs) != 0 {
 		log.Errorf("validate failed %s .", errs.ToAggregate().Error())
 		core.WriteResponse(c, errors.WithCode(code.ErrValidation, errs.ToAggregate().Error()), nil)
+
+		return
+	}
+
+	err = changePassword(user, r, oldPassword)
+	if err != nil {
+		core.WriteResponse(c, errors.WithCode(code.ErrPasswordIncorrect, err.Error()), nil)
 
 		return
 	}
@@ -58,9 +59,6 @@ func (u *UserController) Update(c *gin.Context) {
 }
 
 func changePassword(db *v1.User, req *v1.User, oldPassword string) (err error) {
-	if oldPassword == "" {
-		return nil
-	}
 	if err := db.Compare(oldPassword); err != nil {
 		return errors.WithCode(code.ErrPasswordIncorrect, err.Error())
 	}
