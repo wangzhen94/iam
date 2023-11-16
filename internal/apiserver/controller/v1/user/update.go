@@ -22,7 +22,7 @@ func (u *UserController) Update(c *gin.Context) {
 
 	log.L(c).Infof("update user %s, function called.", r.Name)
 
-	user, err := u.srv.Users().Get(c, c.Param("name"), metav1.GetOptions{})
+	user, err := u.srv.Users().Get(c, r.Name, metav1.GetOptions{})
 	if err != nil {
 		core.WriteResponse(c, err, nil)
 
