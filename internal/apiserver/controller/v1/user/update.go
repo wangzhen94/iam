@@ -12,7 +12,7 @@ import (
 )
 
 func (u *UserController) Update(c *gin.Context) {
-	var r *v1.Policy
+	var r *v1.User
 	oldPassword := c.Query("password")
 	if err := c.ShouldBindJSON(&r); err != nil {
 		core.WriteResponse(c, errors.WithCode(code.ErrBind, err.Error()), nil)
@@ -59,7 +59,7 @@ func (u *UserController) Update(c *gin.Context) {
 	core.WriteResponse(c, nil, user)
 }
 
-func checkOldPassword(user *v1.Policy, oldPassword string) error {
+func checkOldPassword(user *v1.User, oldPassword string) error {
 	if oldPassword == "" {
 		return nil
 	}
