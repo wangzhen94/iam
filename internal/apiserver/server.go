@@ -78,9 +78,9 @@ func (s *apiServer) PrepareRun() preparedAPIServer {
 }
 
 func (s preparedAPIServer) Run() error {
-	//go s.gRPCAPIServer.Run()
+	go s.gRPCAPIServer.Run()
 
-	// start shutdown managers
+	////start shutdown managers
 	//if err := s.gs.Start(); err != nil {
 	//	log.Fatalf("start shutdown manager failed: %s", err.Error())
 	//}

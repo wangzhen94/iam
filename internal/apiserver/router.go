@@ -2,12 +2,14 @@ package apiserver
 
 import (
 	"github.com/gin-gonic/gin"
+	"github.com/marmotedu/component-base/pkg/core"
 	"github.com/marmotedu/errors"
 	"github.com/wangzhen94/iam/internal/apiserver/controller/v1/policy"
 	"github.com/wangzhen94/iam/internal/apiserver/controller/v1/secret"
 	"github.com/wangzhen94/iam/internal/apiserver/controller/v1/user"
 	"github.com/wangzhen94/iam/internal/apiserver/store/mysql"
 	"github.com/wangzhen94/iam/internal/pkg/code"
+	"github.com/wangzhen94/iam/internal/pkg/middleware/auth"
 )
 
 func initRouter(g *gin.Engine) {
@@ -20,9 +22,17 @@ func installMiddleware(g *gin.Engine) {
 
 func installController(g *gin.Engine) *gin.Engine {
 	// Middlewares.
+	jwtStrategy := newJWTAuth().(auth.JWTStrategy)
+	g.POST("/login", jwtStrategy.LoginHandler)
+	g.POST("/logout", jwtStrategy.LogoutHandler)
+	g.POST("/refresh", jwtStrategy.RefreshHandler)
+
+	auto := newAutoAuth()
+	g.NoRoute(auto.AuthFunc(), func(c *gin.Context) {
+		core.WriteResponse(c, errors.WithCode(code.ErrPageNotFound, "Page not found."), nil)
+	})
 
 	storeIns, _ := mysql.GetMySQLFactoryOr(nil)
-
 	v1 := g.Group("/v1")
 	{
 		{
@@ -46,6 +56,7 @@ func installController(g *gin.Engine) *gin.Engine {
 			secretV1.DELETE("", secretController.Delete)
 		}
 
+		v1.Use(auto.AuthFunc())
 		{
 			policyV1 := v1.Group("/policy")
 			policyController := policy.NewPolicyController(storeIns)
