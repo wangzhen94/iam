@@ -12,6 +12,7 @@ import "github.com/wangzhen94/iam/internal/apiserver/store"
 type Service interface {
 	Users() UserSrv
 	Secrets() SecretSrv
+	Policies() PolicySrv
 }
 
 type service struct {
@@ -31,4 +32,8 @@ func (s *service) Users() UserSrv {
 
 func (s *service) Secrets() SecretSrv {
 	return newSecrets(s)
+}
+
+func (s *service) Policies() PolicySrv {
+	return newPolices(s)
 }

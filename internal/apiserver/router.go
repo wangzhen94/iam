@@ -3,6 +3,7 @@ package apiserver
 import (
 	"github.com/gin-gonic/gin"
 	"github.com/marmotedu/errors"
+	"github.com/wangzhen94/iam/internal/apiserver/controller/v1/policy"
 	"github.com/wangzhen94/iam/internal/apiserver/controller/v1/secret"
 	"github.com/wangzhen94/iam/internal/apiserver/controller/v1/user"
 	"github.com/wangzhen94/iam/internal/apiserver/store/mysql"
@@ -45,6 +46,15 @@ func installController(g *gin.Engine) *gin.Engine {
 			secretV1.DELETE("", secretController.Delete)
 		}
 
+		{
+			policyV1 := v1.Group("/policy")
+			policyController := policy.NewPolicyController(storeIns)
+			policyV1.POST("", policyController.Create)
+			policyV1.DELETE("/:name", policyController.Delete)
+			policyV1.PUT("/:name", policyController.Update)
+			policyV1.GET("", policyController.List)
+			policyV1.GET("/:name", policyController.Get)
+		}
 	}
 
 	return g

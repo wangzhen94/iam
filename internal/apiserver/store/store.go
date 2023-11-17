@@ -12,7 +12,7 @@ var client Factory
 type Factory interface {
 	Users() UserStore
 	Secrets() SecretStore
-	//Policies() PolicyStore
+	Policies() PolicyStore
 	//PolicyAudits() PolicyAuditStore
 	Close() error
 }

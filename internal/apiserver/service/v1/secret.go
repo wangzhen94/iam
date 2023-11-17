@@ -24,7 +24,7 @@ type secretService struct {
 
 var _ SecretSrv = (*secretService)(nil)
 
-func newSecrets(srv *service) SecretSrv {
+func newSecrets(srv *service) *secretService {
 	return &secretService{store: srv.store}
 }
 
