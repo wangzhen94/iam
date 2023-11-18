@@ -8,13 +8,13 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/marmotedu/component-base/pkg/core"
 	"github.com/marmotedu/errors"
+	"github.com/wangzhen94/iam/internal/pkg/middleware"
 
 	"github.com/wangzhen94/iam/internal/apiserver/controller/v1/policy"
 	"github.com/wangzhen94/iam/internal/apiserver/controller/v1/secret"
 	"github.com/wangzhen94/iam/internal/apiserver/controller/v1/user"
 	"github.com/wangzhen94/iam/internal/apiserver/store/mysql"
 	"github.com/wangzhen94/iam/internal/pkg/code"
-	"github.com/wangzhen94/iam/internal/pkg/middleware"
 	"github.com/wangzhen94/iam/internal/pkg/middleware/auth"
 )
 

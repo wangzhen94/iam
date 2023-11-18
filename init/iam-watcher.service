@@ -1,6 +1,6 @@
 [Unit]
 Description=IAM Watcher Server
-Documentation=https://github.com/marmotedu/iam/blob/master/init/README.md
+Documentation=https://github.com/wangzhen94/iam/blob/master/init/README.md
 
 [Service]
 WorkingDirectory=${IAM_DATA_DIR}/iam-watcher
