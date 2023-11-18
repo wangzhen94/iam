@@ -3,18 +3,20 @@ package apiserver
 import (
 	"context"
 	"encoding/base64"
+	"net/http"
+	"strings"
+	"time"
+
 	jwt "github.com/appleboy/gin-jwt/v2"
 	"github.com/gin-gonic/gin"
 	v1 "github.com/marmotedu/api/apiserver/v1"
 	metav1 "github.com/marmotedu/component-base/pkg/meta/v1"
 	"github.com/spf13/viper"
+
 	"github.com/wangzhen94/iam/internal/apiserver/store"
 	"github.com/wangzhen94/iam/internal/pkg/middleware"
 	"github.com/wangzhen94/iam/internal/pkg/middleware/auth"
 	"github.com/wangzhen94/iam/pkg/log"
-	"net/http"
-	"strings"
-	"time"
 )
 
 const (
@@ -32,24 +34,22 @@ type loginInfo struct {
 
 func newBasicAuth() middleware.AuthStrategy {
 	return auth.NewBasicStrategy(func(username string, password string) bool {
+		// fetch user from database
 		user, err := store.Client().Users().Get(context.TODO(), username, metav1.GetOptions{})
 		if err != nil {
 			return false
 		}
 
-		if err = user.Compare(password); err != nil {
+		// Compare the login password with the user password.
+		if err := user.Compare(password); err != nil {
 			return false
 		}
-		user.LoginedAt = time.Now()
 
+		user.LoginedAt = time.Now()
 		_ = store.Client().Users().Update(context.TODO(), user, metav1.UpdateOptions{})
 
 		return true
 	})
-}
-
-func newAutoAuth() middleware.AuthStrategy {
-	return auth.NewAutoStrategy(newBasicAuth().(auth.BasicStrategy), newJWTAuth().(auth.JWTStrategy))
 }
 
 func newJWTAuth() middleware.AuthStrategy {
@@ -82,9 +82,14 @@ func newJWTAuth() middleware.AuthStrategy {
 		TokenHeadName: "Bearer",
 		SendCookie:    true,
 		TimeFunc:      time.Now,
+		// TODO: HTTPStatusMessageFunc:
 	})
 
 	return auth.NewJWTStrategy(*ginjwt)
+}
+
+func newAutoAuth() middleware.AuthStrategy {
+	return auth.NewAutoStrategy(newBasicAuth().(auth.BasicStrategy), newJWTAuth().(auth.JWTStrategy))
 }
 
 func authenticator() func(c *gin.Context) (interface{}, error) {
@@ -92,6 +97,7 @@ func authenticator() func(c *gin.Context) (interface{}, error) {
 		var login loginInfo
 		var err error
 
+		// support header and body both
 		if c.Request.Header.Get("Authorization") != "" {
 			login, err = parseWithHeader(c)
 		} else {
@@ -101,44 +107,35 @@ func authenticator() func(c *gin.Context) (interface{}, error) {
 			return "", jwt.ErrFailedAuthentication
 		}
 
+		// Get the user information by the login username.
 		user, err := store.Client().Users().Get(c, login.Username, metav1.GetOptions{})
 		if err != nil {
 			log.Errorf("get user information failed: %s", err.Error())
 
-			return nil, jwt.ErrFailedAuthentication
-		}
-		err = user.Compare(login.Password)
-		if err != nil {
 			return "", jwt.ErrFailedAuthentication
 		}
+
+		// Compare the login password with the user password.
+		if err := user.Compare(login.Password); err != nil {
+			return "", jwt.ErrFailedAuthentication
+		}
+
 		user.LoginedAt = time.Now()
 		_ = store.Client().Users().Update(c, user, metav1.UpdateOptions{})
 
 		return user, nil
 	}
-
-}
-
-func parseWithBody(c *gin.Context) (loginInfo, error) {
-	var login loginInfo
-	if err := c.ShouldBindJSON(&login); err != nil {
-		log.Errorf("parse login parameters: %s", err.Error())
-
-		return login, jwt.ErrFailedAuthentication
-	}
-
-	return login, nil
 }
 
 func parseWithHeader(c *gin.Context) (loginInfo, error) {
-	header := strings.SplitN(c.Request.Header.Get("Authorization"), " ", 2)
-	if len(header) != 2 || header[0] != "Basic" {
+	auth := strings.SplitN(c.Request.Header.Get("Authorization"), " ", 2)
+	if len(auth) != 2 || auth[0] != "Basic" {
 		log.Errorf("get basic string from Authorization header failed")
 
 		return loginInfo{}, jwt.ErrFailedAuthentication
 	}
 
-	payload, err := base64.StdEncoding.DecodeString(header[1])
+	payload, err := base64.StdEncoding.DecodeString(auth[1])
 	if err != nil {
 		log.Errorf("decode basic string: %s", err.Error())
 
@@ -146,7 +143,6 @@ func parseWithHeader(c *gin.Context) (loginInfo, error) {
 	}
 
 	pair := strings.SplitN(string(payload), ":", 2)
-
 	if len(pair) != 2 {
 		log.Errorf("parse payload failed")
 
@@ -157,6 +153,26 @@ func parseWithHeader(c *gin.Context) (loginInfo, error) {
 		Username: pair[0],
 		Password: pair[1],
 	}, nil
+}
+
+func parseWithBody(c *gin.Context) (loginInfo, error) {
+	var login loginInfo
+	if err := c.ShouldBindJSON(&login); err != nil {
+		log.Errorf("parse login parameters: %s", err.Error())
+
+		return loginInfo{}, jwt.ErrFailedAuthentication
+	}
+
+	return login, nil
+}
+
+func refreshResponse() func(c *gin.Context, code int, token string, expire time.Time) {
+	return func(c *gin.Context, code int, token string, expire time.Time) {
+		c.JSON(http.StatusOK, gin.H{
+			"token":  token,
+			"expire": expire.Format(time.RFC3339),
+		})
+	}
 }
 
 func loginResponse() func(c *gin.Context, code int, token string, expire time.Time) {
@@ -174,22 +190,12 @@ func payloadFunc() func(data interface{}) jwt.MapClaims {
 			"iss": APIServerIssuer,
 			"aud": APIServerAudience,
 		}
-
 		if u, ok := data.(*v1.User); ok {
 			claims[jwt.IdentityKey] = u.Name
 			claims["sub"] = u.Name
 		}
 
 		return claims
-	}
-}
-
-func refreshResponse() func(c *gin.Context, code int, token string, expire time.Time) {
-	return func(c *gin.Context, code int, token string, expire time.Time) {
-		c.JSON(http.StatusOK, gin.H{
-			"token":  token,
-			"expire": expire.Format(time.RFC3339),
-		})
 	}
 }
 
