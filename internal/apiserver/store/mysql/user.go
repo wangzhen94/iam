@@ -20,7 +20,7 @@ func newUsers(ds *datastore) *users {
 }
 
 func (u *users) Create(ctx context.Context, user *v1.User, opts metav1.CreateOptions) error {
-	return u.db.Create(&user).Error
+	return u.db.Create(user).Error
 }
 
 func (u *users) Update(ctx context.Context, user *v1.User, opts metav1.UpdateOptions) error {

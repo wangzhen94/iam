@@ -30,9 +30,10 @@ func (a AutoStrategy) AuthFunc() gin.HandlerFunc {
 		if len(authHeader) != authHeaderCount {
 			core.WriteResponse(c,
 				errors.WithCode(code.ErrInvalidAuthHeader, "Authorization header format is wrong."), nil)
-		}
+			c.Abort()
 
-		c.Abort()
+			return
+		}
 
 		switch authHeader[0] {
 		case "Basic":
