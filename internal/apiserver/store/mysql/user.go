@@ -24,7 +24,7 @@ func (u *users) Create(ctx context.Context, user *v1.User, opts metav1.CreateOpt
 }
 
 func (u *users) Update(ctx context.Context, user *v1.User, opts metav1.UpdateOptions) error {
-	return u.db.Updates(&user).Error
+	return u.db.Save(user).Error
 }
 
 func (u *users) Delete(ctx context.Context, username string, opts metav1.DeleteOptions) error {

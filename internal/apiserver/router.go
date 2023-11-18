@@ -35,17 +35,18 @@ func installController(g *gin.Engine) *gin.Engine {
 	storeIns, _ := mysql.GetMySQLFactoryOr(nil)
 	v1 := g.Group("/v1")
 	{
+		userV1 := v1.Group("/user")
 		{
-			userV1 := v1.Group("/user")
 			userController := user.NewUserController(storeIns)
-
 			userV1.POST("", userController.Create)
+			userV1.Use(auto.AuthFunc())
 			userV1.DELETE("/:name", userController.Delete)
 			userV1.GET("", userController.List)
 			userV1.PUT("", userController.Update)
 			userV1.GET("/:name", userController.Get)
 		}
 
+		v1.Use(auto.AuthFunc())
 		{
 			secretV1 := v1.Group("/secret")
 			secretController := secret.NewSecretController(storeIns)

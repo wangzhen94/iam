@@ -5,8 +5,6 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/marmotedu/component-base/pkg/core"
 	"github.com/marmotedu/errors"
-	"time"
-
 	"github.com/wangzhen94/iam/internal/pkg/code"
 	"github.com/wangzhen94/iam/pkg/log"
 )
@@ -26,15 +24,30 @@ func processData(v interface{}) {
 	}
 }
 
+type dog struct {
+	name string
+}
+
+func (d *dog) change() {
+	d.name = "li"
+}
+
+type cat struct {
+	name string
+}
+
+func (c cat) change() {
+	c.name = "zhao"
+}
+
 func main() {
-	now := time.Now()
+	d := dog{"11"}
+	d.change()
+	fmt.Println(d.name)
 
-	time.Sleep(1000)
-
-	after := time.Now()
-
-	a := after.UnixNano() - now.UnixNano()
-	fmt.Println(a)
+	c := &cat{"22"}
+	c.change()
+	fmt.Println(c.name)
 
 	//
 	//d := Data{Name: "John"}
