@@ -16,11 +16,11 @@ type JwtOptions struct {
 }
 
 func NewJwtOptions() *JwtOptions {
-	defaults := server.Config{}
+	defaults := server.NewConfig()
 
 	return &JwtOptions{
 		Realm:      defaults.Jwt.Realm,
-		Key:        defaults.Jwt.Realm,
+		Key:        defaults.Jwt.Key,
 		Timeout:    defaults.Jwt.Timeout,
 		MaxRefresh: defaults.Jwt.MaxRefresh,
 	}
