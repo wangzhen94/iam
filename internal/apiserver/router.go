@@ -42,14 +42,15 @@ func installController(g *gin.Engine) *gin.Engine {
 			userV1.POST("", userController.Create)
 			userV1.Use(auto.AuthFunc(), middleware.Validation())
 			userV1.DELETE("/:name", userController.Delete)
+			userV1.PUT(":name/change-password", userController.ChangePassword)
 			userV1.GET("", userController.List)
 			userV1.PUT("", userController.Update)
 			userV1.GET("/:name", userController.Get)
 		}
 
 		v1.Use(auto.AuthFunc())
+		secretV1 := v1.Group("/secret")
 		{
-			secretV1 := v1.Group("/secret")
 			secretController := secret.NewSecretController(storeIns)
 			secretV1.GET("/:name", secretController.Get)
 			secretV1.POST("", secretController.Create)
@@ -58,9 +59,8 @@ func installController(g *gin.Engine) *gin.Engine {
 			secretV1.DELETE("", secretController.Delete)
 		}
 
-		v1.Use(auto.AuthFunc())
+		policyV1 := v1.Group("/policy")
 		{
-			policyV1 := v1.Group("/policy")
 			policyController := policy.NewPolicyController(storeIns)
 			policyV1.POST("", policyController.Create)
 			policyV1.DELETE("/:name", policyController.Delete)

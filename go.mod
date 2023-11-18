@@ -4,7 +4,7 @@ go 1.17
 
 require (
 	github.com/AlekSi/pointer v1.1.0
-	github.com/appleboy/gin-jwt/v2 v2.9.1
+	github.com/appleboy/gin-jwt/v2 v2.6.4
 	github.com/buger/jsonparser v1.1.1
 	github.com/fatih/color v1.13.0
 	github.com/gin-contrib/pprof v1.3.0
@@ -42,7 +42,6 @@ require (
 	github.com/go-playground/validator/v10 v10.11.1 // indirect
 	github.com/go-sql-driver/mysql v1.6.0 // indirect
 	github.com/goccy/go-json v0.10.0 // indirect
-	github.com/golang-jwt/jwt/v4 v4.4.3 // indirect
 	github.com/golang/protobuf v1.5.2 // indirect
 	github.com/google/uuid v1.1.2 // indirect
 	github.com/hashicorp/golang-lru v0.5.4 // indirect

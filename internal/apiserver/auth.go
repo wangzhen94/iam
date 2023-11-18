@@ -49,7 +49,7 @@ func newBasicAuth() middleware.AuthStrategy {
 }
 
 func newAutoAuth() middleware.AuthStrategy {
-	return auth.NewAutoStrategy(newBasicAuth(), newJWTAuth())
+	return auth.NewAutoStrategy(newBasicAuth().(auth.BasicStrategy), newJWTAuth().(auth.JWTStrategy))
 }
 
 func newJWTAuth() middleware.AuthStrategy {
@@ -98,7 +98,7 @@ func authenticator() func(c *gin.Context) (interface{}, error) {
 			login, err = parseWithBody(c)
 		}
 		if err != nil {
-			return "", err
+			return "", jwt.ErrFailedAuthentication
 		}
 
 		user, err := store.Client().Users().Get(c, login.Username, metav1.GetOptions{})
