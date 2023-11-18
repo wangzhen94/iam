@@ -15,14 +15,14 @@ func Validation() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		if err := isAdmin(c); err != nil {
 			switch c.FullPath() {
-			case "/v1/users":
+			case "/v1/user":
 				if c.Request.Method != http.MethodPost {
 					core.WriteResponse(c, errors.WithCode(code.ErrPermissionDenied, ""), nil)
 					c.Abort()
 
 					return
 				}
-			case "/v1/users/:name", "/v1/users/:name/change_password":
+			case "/v1/user/:name", "/v1/user/:name/change_password":
 				username := c.GetString("username")
 				if c.Request.Method == http.MethodDelete ||
 					(c.Request.Method != http.MethodDelete && username != c.Param("name")) {
