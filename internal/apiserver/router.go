@@ -9,6 +9,7 @@ import (
 	"github.com/wangzhen94/iam/internal/apiserver/controller/v1/user"
 	"github.com/wangzhen94/iam/internal/apiserver/store/mysql"
 	"github.com/wangzhen94/iam/internal/pkg/code"
+	"github.com/wangzhen94/iam/internal/pkg/middleware"
 	"github.com/wangzhen94/iam/internal/pkg/middleware/auth"
 )
 
@@ -39,7 +40,7 @@ func installController(g *gin.Engine) *gin.Engine {
 		{
 			userController := user.NewUserController(storeIns)
 			userV1.POST("", userController.Create)
-			userV1.Use(auto.AuthFunc())
+			userV1.Use(auto.AuthFunc(), middleware.Validation())
 			userV1.DELETE("/:name", userController.Delete)
 			userV1.GET("", userController.List)
 			userV1.PUT("", userController.Update)
