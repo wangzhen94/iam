@@ -2,12 +2,15 @@ package main
 
 import (
 	"fmt"
-	"github.com/gin-gonic/gin"
-	"github.com/marmotedu/component-base/pkg/core"
 	"github.com/marmotedu/errors"
 	"github.com/wangzhen94/iam/internal/pkg/code"
 	"github.com/wangzhen94/iam/pkg/log"
+	"os"
+	"path/filepath"
+	"strings"
 )
+
+var dir = "/Users/wangzhen/go/src/github.com/wangzhen94/iam"
 
 type Data struct {
 	Name string
@@ -41,55 +44,56 @@ func (c cat) change() {
 }
 
 func main() {
-	d := dog{"11"}
-	d.change()
-	fmt.Println(d.name)
-
-	c := &cat{"22"}
-	c.change()
-	fmt.Println(c.name)
-
+	deletePKFiles(dir)
+	//d := dog{"11"}
+	//d.change()
+	//fmt.Println(d.name)
 	//
-	//d := Data{Name: "John"}
+	//c := &cat{"22"}
+	//c.change()
+	//fmt.Println(c.name)
 	//
-	//p := &d
+	////
+	////d := Data{Name: "John"}
+	////
+	////p := &d
+	////
+	////// 传递指针
+	////processData(p.Name)
+	////
+	////// 传递值
+	////processData(p.Name)
 	//
-	//// 传递指针
-	//processData(p.Name)
+	////print("GET", "/user/list", "userList", 3)
+	////print("OPTION", "/user/kkk", "userList", 3)
+	//r := gin.Default()
 	//
-	//// 传递值
-	//processData(p.Name)
-
-	//print("GET", "/user/list", "userList", 3)
-	//print("OPTION", "/user/kkk", "userList", 3)
-	r := gin.Default()
-
-	r.GET("/user/:name", func(c *gin.Context) {
-		name := c.Params.ByName("name")
-		if err := getUser(name); err != nil {
-			core.WriteResponse(c, err, nil)
-			return
-		}
-
-		core.WriteResponse(c, nil, map[string]string{"email": name + "@foxmail.com"})
-	})
-
-	//r.Run(":7070")
-
-	ea := Entity{
-		name: "zhang",
-		attr: map[string]interface{}{
-			"li": "abk",
-		},
-	}
-
-	eb := ea.clone()
-
-	if &ea == eb {
-		fmt.Println("point equal")
-	} else {
-		fmt.Println("point not equal")
-	}
+	//r.GET("/user/:name", func(c *gin.Context) {
+	//	name := c.Params.ByName("name")
+	//	if err := getUser(name); err != nil {
+	//		core.WriteResponse(c, err, nil)
+	//		return
+	//	}
+	//
+	//	core.WriteResponse(c, nil, map[string]string{"email": name + "@foxmail.com"})
+	//})
+	//
+	////r.Run(":7070")
+	//
+	//ea := Entity{
+	//	name: "zhang",
+	//	attr: map[string]interface{}{
+	//		"li": "abk",
+	//	},
+	//}
+	//
+	//eb := ea.clone()
+	//
+	//if &ea == eb {
+	//	fmt.Println("point equal")
+	//} else {
+	//	fmt.Println("point not equal")
+	//}
 
 }
 
@@ -117,4 +121,28 @@ func (e *Entity) clone() *Entity {
 	copy := *e
 
 	return &copy
+}
+
+func deletePKFiles(rootDir string) error {
+	return filepath.Walk(rootDir, func(path string, info os.FileInfo, err error) error {
+		if err != nil {
+			return err
+		}
+
+		// 判断是否为目录
+		if info.IsDir() {
+			return nil
+		}
+
+		// 判断文件名中是否包含.pk
+		if strings.Contains(info.Name(), ".pk") {
+			fmt.Printf("Deleting file: %s\n", path)
+			err := os.Remove(path)
+			if err != nil {
+				return err
+			}
+		}
+
+		return nil
+	})
 }
