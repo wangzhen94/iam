@@ -48,24 +48,25 @@ func (u *userService) List(ctx context.Context, opts metav1.ListOptions) (*v1.Us
 	if err != nil {
 		log.L(ctx).Errorf("list users from storage failed: %s", err.Error())
 
-		return nil, nil
+		return nil, errors.WithCode(code.ErrDatabase, err.Error())
 	}
 
 	wg := sync.WaitGroup{}
 	errChan := make(chan error, 1)
 	finished := make(chan bool, 1)
-
 	var m sync.Map
 
-	// Improve query efficiency in parallel
 	for _, user := range users.Items {
 		wg.Add(1)
 
 		go func(user *v1.User) {
 			defer wg.Done()
+			policies, err := u.store.Policies().List(ctx, user.Name, metav1.ListOptions{})
+			if err != nil {
+				errChan <- errors.WithCode(code.ErrDatabase, err.Error())
 
-			// some cost time process
-			//policies, err := u.store.Policies().List(ctx, user.Name, metav1.ListOptions{})
+				return
+			}
 
 			m.Store(user.ID, &v1.User{
 				ObjectMeta: metav1.ObjectMeta{
@@ -79,7 +80,7 @@ func (u *userService) List(ctx context.Context, opts metav1.ListOptions) (*v1.Us
 				Nickname:    user.Nickname,
 				Email:       user.Email,
 				Phone:       user.Phone,
-				TotalPolicy: 0,
+				TotalPolicy: policies.TotalCount,
 				LoginedAt:   user.LoginedAt,
 			})
 		}(user)

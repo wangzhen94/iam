@@ -8,6 +8,7 @@ import (
 	"os"
 	"path/filepath"
 	"strings"
+	"sync"
 )
 
 var dir = "/Users/wangzhen/go/src/github.com/wangzhen94/iam"
@@ -44,7 +45,38 @@ func (c cat) change() {
 }
 
 func main() {
-	deletePKFiles(dir)
+	ch := make(chan int, 1)
+	var wg sync.WaitGroup
+
+	wg.Add(2)
+
+	go func() {
+		defer wg.Done()
+		for {
+			select {
+			case value := <-ch:
+				fmt.Println("一：Received:", value)
+				//time.Sleep(time.Second)
+				ch <- 1
+				fmt.Println("一：send: 1")
+			}
+		}
+	}()
+
+	go func() {
+		defer wg.Done()
+		for {
+			select {
+			case ch <- 2:
+				fmt.Println("二：Sent 2")
+				//time.Sleep(time.Second)
+				value := <-ch
+				fmt.Println("二：Received: ", value)
+			}
+		}
+	}()
+
+	wg.Wait()
 	//d := dog{"11"}
 	//d.change()
 	//fmt.Println(d.name)
@@ -95,6 +127,43 @@ func main() {
 	//	fmt.Println("point not equal")
 	//}
 
+}
+
+func deadLock() {
+	ch := make(chan int, 1)
+	var wg sync.WaitGroup
+	var mu sync.Mutex
+
+	wg.Add(2)
+
+	go func() {
+		defer wg.Done()
+		for {
+			mu.Lock()
+			value := <-ch
+			fmt.Println("Received:", value)
+			mu.Unlock()
+			//time.Sleep(time.Second)
+			mu.Lock()
+			ch <- 1
+			mu.Unlock()
+		}
+	}()
+
+	go func() {
+		defer wg.Done()
+		for {
+			mu.Lock()
+			ch <- 2
+			fmt.Println("Sent 2")
+			//time.Sleep(time.Second)
+			value := <-ch
+			fmt.Println("Received after sending 2:", value)
+			mu.Unlock()
+		}
+	}()
+
+	wg.Wait()
 }
 
 func getUser(name string) error {
