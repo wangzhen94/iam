@@ -20,7 +20,7 @@ type Options struct {
 	RedisOptions *genericoptions.RedisOptions `json:"redis"    mapstructure:"redis"`
 	JwtOptions   *genericoptions.JwtOptions   `json:"jwt"      mapstructure:"jwt"`
 	Log          *log.Options                 `json:"log"      mapstructure:"log"`
-	//FeatureOptions          *genericoptions.FeatureOptions         `json:"feature"  mapstructure:"feature"`
+	//FeatureOptions *genericoptions.FeatureOptions `json:"feature"  mapstructure:"feature"`
 }
 
 // NewOptions creates a new Options object with default parameters.

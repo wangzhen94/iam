@@ -22,6 +22,7 @@ require (
 	github.com/marmotedu/log v0.0.1
 	github.com/marmotedu/marmotedu-sdk-go v1.6.2
 	github.com/mattn/go-isatty v0.0.14
+	github.com/mitchellh/go-homedir v1.1.0
 	github.com/mitchellh/go-wordwrap v1.0.1
 	github.com/moby/term v0.0.0-20210619224110-3f7ff695adc6
 	github.com/novalagung/gubrak v1.0.0

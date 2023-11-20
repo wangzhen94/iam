@@ -8,13 +8,13 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/marmotedu/component-base/pkg/core"
 	"github.com/marmotedu/errors"
-	"github.com/wangzhen94/iam/internal/pkg/middleware"
-
+	"github.com/spf13/viper"
 	"github.com/wangzhen94/iam/internal/apiserver/controller/v1/policy"
 	"github.com/wangzhen94/iam/internal/apiserver/controller/v1/secret"
 	"github.com/wangzhen94/iam/internal/apiserver/controller/v1/user"
 	"github.com/wangzhen94/iam/internal/apiserver/store/mysql"
 	"github.com/wangzhen94/iam/internal/pkg/code"
+	"github.com/wangzhen94/iam/internal/pkg/middleware"
 	"github.com/wangzhen94/iam/internal/pkg/middleware/auth"
 )
 
@@ -52,7 +52,7 @@ func installController(g *gin.Engine) *gin.Engine {
 			userv1.Use(auto.AuthFunc(), middleware.Validation())
 			// v1.PUT("/find_password", userController.FindPassword)
 			userv1.DELETE(":name", userController.Delete) // admin api
-			userv1.PUT(":name/change-password", userController.ChangePassword)
+			userv1.PUT(":name/change_password", userController.ChangePassword)
 			userv1.PUT(":name", userController.Update)
 			userv1.GET("", userController.List)
 			userv1.GET(":name", userController.Get) // admin api
@@ -84,6 +84,21 @@ func installController(g *gin.Engine) *gin.Engine {
 			secretv1.GET(":name", secretController.Get)
 		}
 	}
+
+	demo := g.Group("")
+
+	demo.GET("/loglevel/:n", func(c *gin.Context) {
+		//n := c.Param("n")
+
+		/*if l, _ := strconv.Atoi(n); l > 3 {
+			log.Info("this is info ")
+		} else {
+			log.Error("eee")
+		}*/
+		mode := viper.GetString("jwt.djb")
+
+		core.WriteResponse(c, nil, mode)
+	})
 
 	return g
 }

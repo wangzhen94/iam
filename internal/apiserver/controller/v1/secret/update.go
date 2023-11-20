@@ -41,5 +41,12 @@ func (s *SecretController) Update(c *gin.Context) {
 		return
 	}
 
+	err = s.srv.Secrets().Update(c, secret, metav1.UpdateOptions{})
+	if err != nil {
+		core.WriteResponse(c, err, nil)
+
+		return
+	}
+
 	core.WriteResponse(c, nil, secret)
 }
