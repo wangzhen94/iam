@@ -2,16 +2,12 @@ package main
 
 import (
 	"fmt"
+	"github.com/gin-gonic/gin"
+	"github.com/marmotedu/component-base/pkg/core"
 	"github.com/marmotedu/errors"
 	"github.com/wangzhen94/iam/internal/pkg/code"
 	"github.com/wangzhen94/iam/pkg/log"
-	"os"
-	"path/filepath"
-	"strings"
-	"sync"
 )
-
-var dir = "/Users/wangzhen/go/src/github.com/wangzhen94/iam"
 
 type Data struct {
 	Name string
@@ -45,125 +41,56 @@ func (c cat) change() {
 }
 
 func main() {
-	ch := make(chan int, 1)
-	var wg sync.WaitGroup
+	d := dog{"11"}
+	d.change()
+	fmt.Println(d.name)
 
-	wg.Add(2)
+	c := &cat{"22"}
+	c.change()
+	fmt.Println(c.name)
 
-	go func() {
-		defer wg.Done()
-		for {
-			select {
-			case value := <-ch:
-				fmt.Println("一：Received:", value)
-				//time.Sleep(time.Second)
-				ch <- 1
-				fmt.Println("一：send: 1")
-			}
+	//
+	//d := Data{Name: "John"}
+	//
+	//p := &d
+	//
+	//// 传递指针
+	//processData(p.Name)
+	//
+	//// 传递值
+	//processData(p.Name)
+
+	//print("GET", "/user/list", "userList", 3)
+	//print("OPTION", "/user/kkk", "userList", 3)
+	r := gin.Default()
+
+	r.GET("/user/:name", func(c *gin.Context) {
+		name := c.Params.ByName("name")
+		if err := getUser(name); err != nil {
+			core.WriteResponse(c, err, nil)
+			return
 		}
-	}()
 
-	go func() {
-		defer wg.Done()
-		for {
-			select {
-			case ch <- 2:
-				fmt.Println("二：Sent 2")
-				//time.Sleep(time.Second)
-				value := <-ch
-				fmt.Println("二：Received: ", value)
-			}
-		}
-	}()
+		core.WriteResponse(c, nil, map[string]string{"email": name + "@foxmail.com"})
+	})
 
-	wg.Wait()
-	//d := dog{"11"}
-	//d.change()
-	//fmt.Println(d.name)
-	//
-	//c := &cat{"22"}
-	//c.change()
-	//fmt.Println(c.name)
-	//
-	////
-	////d := Data{Name: "John"}
-	////
-	////p := &d
-	////
-	////// 传递指针
-	////processData(p.Name)
-	////
-	////// 传递值
-	////processData(p.Name)
-	//
-	////print("GET", "/user/list", "userList", 3)
-	////print("OPTION", "/user/kkk", "userList", 3)
-	//r := gin.Default()
-	//
-	//r.GET("/user/:name", func(c *gin.Context) {
-	//	name := c.Params.ByName("name")
-	//	if err := getUser(name); err != nil {
-	//		core.WriteResponse(c, err, nil)
-	//		return
-	//	}
-	//
-	//	core.WriteResponse(c, nil, map[string]string{"email": name + "@foxmail.com"})
-	//})
-	//
-	////r.Run(":7070")
-	//
-	//ea := Entity{
-	//	name: "zhang",
-	//	attr: map[string]interface{}{
-	//		"li": "abk",
-	//	},
-	//}
-	//
-	//eb := ea.clone()
-	//
-	//if &ea == eb {
-	//	fmt.Println("point equal")
-	//} else {
-	//	fmt.Println("point not equal")
-	//}
+	//r.Run(":7070")
 
-}
+	ea := Entity{
+		name: "zhang",
+		attr: map[string]interface{}{
+			"li": "abk",
+		},
+	}
 
-func deadLock() {
-	ch := make(chan int, 1)
-	var wg sync.WaitGroup
-	var mu sync.Mutex
+	eb := ea.clone()
 
-	wg.Add(2)
+	if &ea == eb {
+		fmt.Println("point equal")
+	} else {
+		fmt.Println("point not equal")
+	}
 
-	go func() {
-		defer wg.Done()
-		for {
-			mu.Lock()
-			value := <-ch
-			fmt.Println("Received:", value)
-			mu.Unlock()
-			//time.Sleep(time.Second)
-			mu.Lock()
-			ch <- 1
-			mu.Unlock()
-		}
-	}()
-
-	go func() {
-		defer wg.Done()
-		for {
-			mu.Lock()
-			ch <- 2
-			fmt.Println("Sent 2")
-			//time.Sleep(time.Second)
-			value := <-ch
-			fmt.Println("Received after sending 2:", value)
-			mu.Unlock()
-		}
-	}()
-
-	wg.Wait()
 }
 
 func getUser(name string) error {
@@ -190,28 +117,4 @@ func (e *Entity) clone() *Entity {
 	copy := *e
 
 	return &copy
-}
-
-func deletePKFiles(rootDir string) error {
-	return filepath.Walk(rootDir, func(path string, info os.FileInfo, err error) error {
-		if err != nil {
-			return err
-		}
-
-		// 判断是否为目录
-		if info.IsDir() {
-			return nil
-		}
-
-		// 判断文件名中是否包含.pk
-		if strings.Contains(info.Name(), ".pk") {
-			fmt.Printf("Deleting file: %s\n", path)
-			err := os.Remove(path)
-			if err != nil {
-				return err
-			}
-		}
-
-		return nil
-	})
 }
