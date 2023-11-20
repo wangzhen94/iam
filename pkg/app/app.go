@@ -295,7 +295,7 @@ func printWorkingDir() {
 }
 
 func addCmdTemplate(cmd *cobra.Command, namedFlagSets cliflag.NamedFlagSets) {
-	usageFmt := "aaa Usage:\n  %s\n"
+	usageFmt := "Usage:\n  %s\n"
 	cols, _, _ := term.TerminalSize(cmd.OutOrStdout())
 	cmd.SetUsageFunc(func(cmd *cobra.Command) error {
 		fmt.Fprintf(cmd.OutOrStderr(), usageFmt, cmd.UseLine())

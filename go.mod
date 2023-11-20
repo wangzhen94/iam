@@ -13,7 +13,6 @@ require (
 	github.com/gin-contrib/pprof v1.3.0
 	github.com/gin-gonic/gin v1.7.4
 	github.com/go-redis/redis/v7 v7.4.1
-	github.com/gosuri/uitable v0.0.4
 	github.com/jinzhu/gorm v1.9.16
 	github.com/likexian/host-stat-go v0.0.0-20190516151207-c9cf36dd6ce9
 	github.com/marmotedu/api v1.6.3
