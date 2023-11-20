@@ -8,6 +8,7 @@ require (
 	github.com/appleboy/gin-jwt/v2 v2.6.4
 	github.com/asaskevich/govalidator v0.0.0-20210307081110-f21760c49a8d
 	github.com/buger/jsonparser v1.1.1
+	github.com/dgrijalva/jwt-go v3.2.0+incompatible
 	github.com/fatih/color v1.13.0
 	github.com/ghodss/yaml v1.0.0
 	github.com/gin-contrib/pprof v1.3.0
@@ -21,7 +22,6 @@ require (
 	github.com/marmotedu/log v0.0.1
 	github.com/marmotedu/marmotedu-sdk-go v1.6.2
 	github.com/mattn/go-isatty v0.0.14
-	github.com/mitchellh/go-homedir v1.1.0
 	github.com/mitchellh/go-wordwrap v1.0.1
 	github.com/moby/term v0.0.0-20210619224110-3f7ff695adc6
 	github.com/novalagung/gubrak v1.0.0
@@ -46,7 +46,6 @@ require (
 	github.com/Azure/go-ansiterm v0.0.0-20210617225240-d185dfc1b5a1 // indirect
 	github.com/davecgh/go-spew v1.1.1 // indirect
 	github.com/denisenkom/go-mssqldb v0.10.0 // indirect
-	github.com/dgrijalva/jwt-go v3.2.0+incompatible // indirect
 	github.com/dlclark/regexp2 v1.2.0 // indirect
 	github.com/fsnotify/fsnotify v1.5.1 // indirect
 	github.com/gin-contrib/sse v0.1.0 // indirect
@@ -56,6 +55,7 @@ require (
 	github.com/go-sql-driver/mysql v1.6.0 // indirect
 	github.com/golang/protobuf v1.5.2 // indirect
 	github.com/google/uuid v1.1.2 // indirect
+	github.com/gosuri/uitable v0.0.4 // indirect
 	github.com/h2non/filetype v1.1.1 // indirect
 	github.com/hashicorp/golang-lru v0.5.4 // indirect
 	github.com/hashicorp/hcl v1.0.0 // indirect
