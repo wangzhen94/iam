@@ -19,8 +19,7 @@ DCURL="curl -f -s -XDELETE" # Delete
 
 iam::test::login()
 {
-  ${CCURL} "${Header}" http://127.0.0.1:8080/login \
-    -d'{"username":"admin","password":"Admin@2021"}' | grep -Po 'token[" :]+\K[^"]+'
+  ${CCURL} "${Header}" http://127.0.0.1:8080/login -d'{"username":"admin","password":"Admin@2021"}' | grep 'token[" :]+\K[^"]+'
 }
 
 iam::test::user()
@@ -36,6 +35,12 @@ iam::test::user()
   ${CCURL} "${Header}" "${token}" http://127.0.0.1:8080/v1/user \
     -d'{"password":"User@2021","metadata":{"name":"colin"},"nickname":"colin","email":"colin@foxmail.com","phone":"1812884xxxx"}'; echo
 
+  ${CCURL} "${Header}" "${token}" http://127.0.0.1:8080/v1/user \
+    -d'{"password":"User@2021","metadata":{"name":"mark"},"nickname":"mark","email":"mark@foxmail.com","phone":"1812884xxxx"}'; echo
+
+  ${CCURL} "${Header}" "${token}" http://127.0.0.1:8080/v1/user \
+    -d'{"password":"User@2021","metadata":{"name":"john"},"nickname":"john","email":"john@foxmail.com","phone":"1812884xxxx"}'; echo
+
   # 3. 列出所有用户
   ${RCURL} "${token}" "http://127.0.0.1:8080/v1/user?offset=0&limit=10"; echo
 
@@ -50,7 +55,7 @@ iam::test::user()
   ${DCURL} "${token}" http://127.0.0.1:8080/v1/user/colin; echo
 
   # 7. 批量删除用户
-  ${DCURL} "${token}" "http://127.0.0.1:8080/v1/user?name=mark&name=john"; echo
+  ${DCURL} "${token}" "http://127.0.0.1:8080/v1/user?name=mark&name=john&name=colin"; echo
   iam::log::info "$(echo -e '\033[32mcongratulations, /v1/user test passed!\033[0m')"
 }
 

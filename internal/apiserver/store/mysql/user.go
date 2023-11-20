@@ -8,6 +8,7 @@ import (
 	"github.com/marmotedu/errors"
 	"github.com/wangzhen94/iam/internal/pkg/code"
 	"github.com/wangzhen94/iam/internal/pkg/util/gormutil"
+	"github.com/wangzhen94/iam/pkg/log"
 	"gorm.io/gorm"
 )
 
@@ -50,6 +51,7 @@ func (u *users) DeleteCollection(ctx context.Context, usernames []string, opts m
 
 func (u *users) Get(ctx context.Context, username string, opts metav1.GetOptions) (*v1.User, error) {
 	user := &v1.User{}
+	log.Infof("update query user: %s.", username)
 	err := u.db.Where("name = ? and status = 1", username).First(&user).Error
 	if err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
