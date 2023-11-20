@@ -19,7 +19,8 @@ DCURL="curl -f -s -XDELETE" # Delete
 
 iam::test::login()
 {
-  ${CCURL} "${Header}" http://127.0.0.1:8080/login -d'{"username":"admin","password":"Admin@2021"}' | grep 'token[" :]+\K[^"]+'
+  ${CCURL} "${Header}" http://127.0.0.1:8080/login \
+    -d'{"username":"admin","password":"Admin@2021"}' | grep -Po 'token[" :]+\K[^"]+'
 }
 
 iam::test::user()
