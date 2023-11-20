@@ -16,6 +16,8 @@ import (
 	"github.com/wangzhen94/iam/internal/pkg/code"
 	"github.com/wangzhen94/iam/internal/pkg/middleware"
 	"github.com/wangzhen94/iam/internal/pkg/middleware/auth"
+
+	_ "github.com/wangzhen94/iam/pkg/validator"
 )
 
 func initRouter(g *gin.Engine) {
