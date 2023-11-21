@@ -7,8 +7,10 @@ import (
 	"github.com/wangzhen94/iam/internal/apiserver/store"
 	"github.com/wangzhen94/iam/internal/apiserver/store/mysql"
 	genericoptions "github.com/wangzhen94/iam/internal/pkg/options"
+	"github.com/wangzhen94/iam/pkg/log"
 	"github.com/wangzhen94/iam/pkg/storage"
 	"google.golang.org/grpc"
+	"google.golang.org/grpc/credentials"
 	"google.golang.org/grpc/reflection"
 )
 
@@ -157,8 +159,12 @@ func (c *ExtraConfig) complete() *completedExtraConfig {
 }
 
 func (c *completedExtraConfig) New() (*grpcAPIServer, error) {
+	creds, err := credentials.NewServerTLSFromFile(c.ServerCert.CertKey.CertFile, c.ServerCert.CertKey.KeyFile)
+	if err != nil {
+		log.Fatalf("Failed to generate credentials %s", err.Error())
+	}
 
-	opts := []grpc.ServerOption{grpc.MaxRecvMsgSize(c.MaxMsgSize)}
+	opts := []grpc.ServerOption{grpc.MaxRecvMsgSize(c.MaxMsgSize), grpc.Creds(creds)}
 	grpcServer := grpc.NewServer(opts...)
 
 	storeIns, _ := mysql.GetMySQLFactoryOr(c.mysqlOptions)
