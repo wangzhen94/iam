@@ -207,7 +207,7 @@ iam::test::real_pump_test()
 
 iam::test::watcher()
 {
-  ${RCURL} http://${IAM_WATCHER_HOST}:5050/healthz | egrep -q 'status.*ok' || {
+  ${RCURL} http://127.0.0.1:8080/healthz | egrep -q 'status.*ok' || {
     iam::log::error "cannot access iam-watcher healthz api, iam-watcher maybe down"
       return 1
     }
