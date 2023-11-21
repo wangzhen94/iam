@@ -56,7 +56,7 @@ iam::test::user()
   ${DCURL} "${token}" http://127.0.0.1:8080/v1/user/colin; echo
 
   # 7. 批量删除用户
-  ${DCURL} "${token}" "http://${INSECURE_APISERVER}/v1/users?name=mark&name=john"; echo
+  ${DCURL} "${token}" http://127.0.0.1:8080/v1/user?name=mark&name=john; echo
   iam::log::info "$(echo -e '\033[32mcongratulations, /v1/user test passed!\033[0m')"
 }
 
