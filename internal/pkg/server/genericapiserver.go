@@ -14,10 +14,10 @@ import (
 type GenericAPIServer struct {
 	middlewares []string
 	// SecureServingInfo holds configuration of the TLS server.
-	//SecureServingInfo *SecureServingInfo
+	SecureServingInfo *SecureServingInfo
 
 	// InsecureServingInfo holds configuration of the insecure HTTP server.
-	//InsecureServingInfo *InsecureServingInfo
+	InsecureServingInfo *InsecureServingInfo
 
 	ShutdownTimeout time.Duration
 

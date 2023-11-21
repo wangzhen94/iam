@@ -62,6 +62,14 @@ func buildGenericConfig(cfg *config.Config) (genericConfig *genericapiserver.Con
 		return
 	}
 
+	if lastErr = cfg.SecureServing.ApplyTo(genericConfig); lastErr != nil {
+		return
+	}
+
+	if lastErr = cfg.InsecureServing.ApplyTo(genericConfig); lastErr != nil {
+		return
+	}
+
 	return
 }
 
@@ -118,9 +126,9 @@ func (s *apiServer) initRedisStore() {
 
 // ExtraConfig defines extra configuration for the iam-apiserver.
 type ExtraConfig struct {
-	Addr       string
-	MaxMsgSize int
-	//ServerCert   genericoptions.GeneratableKeyCert
+	Addr         string
+	MaxMsgSize   int
+	ServerCert   genericoptions.GeneratableKeyCert
 	mysqlOptions *genericoptions.MySQLOptions
 	// etcdOptions      *genericoptions.EtcdOptions
 }
@@ -128,9 +136,9 @@ type ExtraConfig struct {
 // nolint: unparam
 func buildExtraConfig(cfg *config.Config) (*ExtraConfig, error) {
 	return &ExtraConfig{
-		Addr:       fmt.Sprintf("%s:%d", cfg.GRPCOptions.BindAddress, cfg.GRPCOptions.BindPort),
-		MaxMsgSize: cfg.GRPCOptions.MaxMsgSize,
-		//ServerCert:   cfg.SecureServing.ServerCert,
+		Addr:         fmt.Sprintf("%s:%d", cfg.GRPCOptions.BindAddress, cfg.GRPCOptions.BindPort),
+		MaxMsgSize:   cfg.GRPCOptions.MaxMsgSize,
+		ServerCert:   cfg.SecureServing.ServerCert,
 		mysqlOptions: cfg.MySQLOptions,
 		// etcdOptions:      cfg.EtcdOptions,
 	}, nil
