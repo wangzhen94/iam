@@ -108,11 +108,13 @@ func (c CompletedConfig) New() (*GenericAPIServer, error) {
 	gin.SetMode(c.Mode)
 
 	s := &GenericAPIServer{
-		healthz:         c.Healthz,
-		enableMetrics:   c.EnableMetrics,
-		enableProfiling: c.EnableProfiling,
-		middlewares:     c.Middlewares,
-		Engine:          gin.New(),
+		InsecureServingInfo: c.InsecureServing,
+		SecureServingInfo:   c.SecureServing,
+		healthz:             c.Healthz,
+		enableMetrics:       c.EnableMetrics,
+		enableProfiling:     c.EnableProfiling,
+		middlewares:         c.Middlewares,
+		Engine:              gin.New(),
 	}
 
 	initGenericAPIServer(s)
