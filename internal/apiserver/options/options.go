@@ -6,6 +6,8 @@ import (
 	//"github.com/marmotedu/component-base/pkg/util/idutil"
 
 	cliflag "github.com/marmotedu/component-base/pkg/cli/flag"
+	"github.com/marmotedu/component-base/pkg/json"
+	"github.com/marmotedu/component-base/pkg/util/idutil"
 	genericoptions "github.com/wangzhen94/iam/internal/pkg/options"
 	//"github.com/wangzhen94/iam/internal/pkg/server"
 	"github.com/wangzhen94/iam/pkg/log"
@@ -52,4 +54,18 @@ func (o *Options) Flags() (fss cliflag.NamedFlagSets) {
 	o.Log.AddFlags(fss.FlagSet("logs"))
 
 	return fss
+}
+func (o *Options) String() string {
+	data, _ := json.Marshal(o)
+
+	return string(data)
+}
+
+// Complete set default Options.
+func (o *Options) Complete() error {
+	if o.JwtOptions.Key == "" {
+		o.JwtOptions.Key = idutil.NewSecretKey()
+	}
+
+	return o.SecureServing.Complete()
 }

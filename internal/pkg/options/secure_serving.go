@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/spf13/pflag"
 	"github.com/wangzhen94/iam/internal/pkg/server"
+	"path"
 )
 
 type SecureServingOptions struct {
@@ -108,6 +109,28 @@ func (s *SecureServingOptions) ApplyTo(c *server.Config) error {
 			CertFile: s.ServerCert.CertKey.CertFile,
 			KeyFile:  s.ServerCert.CertKey.KeyFile,
 		},
+	}
+
+	return nil
+}
+
+func (s *SecureServingOptions) Complete() error {
+	if s == nil || s.BindPort == 0 {
+		return nil
+	}
+
+	keyCert := &s.ServerCert.CertKey
+	if len(keyCert.CertFile) != 0 || len(keyCert.KeyFile) != 0 {
+		return nil
+	}
+
+	if len(s.ServerCert.CertDirectory) > 0 {
+		if len(s.ServerCert.PairName) == 0 {
+			return fmt.Errorf("--secure.tls.pair-name is required if --secure.tls.cert-dir is set")
+		}
+
+		keyCert.CertFile = path.Join(s.ServerCert.CertDirectory, s.ServerCert.PairName+".crt")
+		keyCert.KeyFile = path.Join(s.ServerCert.CertDirectory, s.ServerCert.PairName+".key")
 	}
 
 	return nil

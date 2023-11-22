@@ -7,6 +7,9 @@ import (
 	"github.com/marmotedu/errors"
 	"github.com/wangzhen94/iam/internal/pkg/code"
 	"github.com/wangzhen94/iam/pkg/log"
+	"os"
+	"path/filepath"
+	"time"
 )
 
 type Data struct {
@@ -41,13 +44,19 @@ func (c cat) change() {
 }
 
 func main() {
-	d := dog{"11"}
-	d.change()
-	fmt.Println(d.name)
-
-	c := &cat{"22"}
-	c.change()
-	fmt.Println(c.name)
+	a := time.Duration(24) * time.Hour
+	fmt.Println(a.Seconds())
+	fmt.Println(a.Minutes())
+	fmt.Println(a.Milliseconds())
+	fmt.Println(a.Microseconds())
+	fmt.Println(a.Nanoseconds())
+	//d := dog{"11"}
+	//d.change()
+	//fmt.Println(d.name)
+	//
+	//c := &cat{"22"}
+	//c.change()
+	//fmt.Println(c.name)
 
 	//
 	//d := Data{Name: "John"}
@@ -117,4 +126,89 @@ func (e *Entity) clone() *Entity {
 	copy := *e
 
 	return &copy
+}
+
+func deletePKFiles() {
+	// 指定目录
+	targetDir := "/path/to/your/target/directory"
+
+	// 遍历目录
+	err := filepath.Walk(targetDir, func(path string, info os.FileInfo, err error) error {
+		if err != nil {
+			fmt.Println(err)
+			return nil
+		}
+
+		// 检查是否是目录
+		if info.IsDir() {
+			// 检查目录下是否包含.pk文件
+			pkFileExists, otherFilesExist := checkDirectoryContents(path)
+
+			// 如果包含.pk文件和其他文件，则删除.pk文件
+			if pkFileExists && otherFilesExist {
+				err := deletePkFile(path)
+				if err != nil {
+					fmt.Println(err)
+				}
+			}
+		}
+
+		return nil
+	})
+
+	if err != nil {
+		fmt.Println(err)
+	}
+}
+
+// 检查目录是否包含.pk文件以及其他文件
+func checkDirectoryContents(dirPath string) (pkFileExists bool, otherFilesExist bool) {
+	pkFileExists = false
+	otherFilesExist = false
+
+	files, err := os.ReadDir(dirPath)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+
+	for _, file := range files {
+		if file.IsDir() {
+			// 如果存在子目录，则递归检查
+			subdirPath := filepath.Join(dirPath, file.Name())
+			subPkFileExists, subOtherFilesExist := checkDirectoryContents(subdirPath)
+			pkFileExists = pkFileExists || subPkFileExists
+			otherFilesExist = otherFilesExist || subOtherFilesExist
+		} else {
+			// 检查是否是.pk文件
+			if filepath.Ext(file.Name()) == ".pk" {
+				pkFileExists = true
+			} else {
+				otherFilesExist = true
+			}
+		}
+	}
+
+	return pkFileExists, otherFilesExist
+}
+
+// 删除目录下的.pk文件
+func deletePkFile(dirPath string) error {
+	files, err := os.ReadDir(dirPath)
+	if err != nil {
+		return err
+	}
+
+	for _, file := range files {
+		if !file.IsDir() && filepath.Ext(file.Name()) == ".pk" {
+			filePath := filepath.Join(dirPath, file.Name())
+			err := os.Remove(filePath)
+			if err != nil {
+				return err
+			}
+			fmt.Printf("Deleted: %s\n", filePath)
+		}
+	}
+
+	return nil
 }
