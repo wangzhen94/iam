@@ -4,10 +4,9 @@ import (
 	"fmt"
 	"github.com/marmotedu/errors"
 	"github.com/wangzhen94/iam/internal/pkg/code"
-	"github.com/wangzhen94/iam/pkg/log"
+	"io/fs"
 	"os"
 	"path/filepath"
-	"strings"
 )
 
 type Data struct {
@@ -30,7 +29,11 @@ type dog struct {
 }
 
 func (d *dog) change() {
-	d.name = "li"
+	d.name = "changed"
+}
+
+type change interface {
+	change()
 }
 
 type cat struct {
@@ -38,32 +41,71 @@ type cat struct {
 }
 
 func (c cat) change() {
-	c.name = "zhao"
+	c.name = "changed"
 }
 
+type opt struct {
+}
+
+func (o *opt) fn1() {
+}
+
+type config struct {
+	*opt
+}
+
+type option interface {
+	fn1()
+}
+
+func newOption() option {
+	return &opt{}
+
+}
 func main() {
+	//typeAssert()
+
 	deletePKFiles()
-	//d := dog{"11"}
-	//d.change()
-	//fmt.Println(d.name)
-	//
-	//c := &cat{"22"}
-	//c.change()
-	//fmt.Println(c.name)
+	//structComparePointImp()
 
-	//
-	//d := Data{Name: "John"}
-	//
-	//p := &d
-	//
-	//// 传递指针
-	//processData(p.Name)
-	//
-	//// 传递值
-	//processData(p.Name)
+	//printType()
+}
 
-	//print("GET", "/user/list", "userList", 3)
-	//print("OPTION", "/user/kkk", "userList", 3)
+func printType() {
+	p := Data{Name: "John"}
+
+	// 传递指针
+	processData(&p.Name)
+
+	// 传递值
+	processData(p.Name)
+}
+
+func structComparePointImp() {
+	d := dog{"11"}
+	d.change()
+	fmt.Println(d.name)
+
+	c := cat{"22"}
+	c.change()
+	fmt.Println(c.name)
+}
+
+func typeAssert() {
+	o := newOption()
+
+	// 编译通过
+	if _, ok := o.(config); ok {
+	}
+	// 编译通过
+	if _, ok := o.(*config); ok {
+	}
+	// 编译不通过
+	//if _, ok := o.(opt); ok {
+	//}
+	// 编译通过
+	if _, ok := o.(*opt); ok {
+	}
 }
 
 func getUser(name string) error {
@@ -75,10 +117,6 @@ func getUser(name string) error {
 
 func queryDataBase(name string) error {
 	return errors.WithCode(code.ErrDatabase, "user '%s' not found")
-}
-
-func print(httpMethod, absolutePath, handlerName string, nuHandlers int) {
-	log.Infof("%-6s %-s --> %s (%d handlers)", httpMethod, absolutePath, handlerName, nuHandlers)
 }
 
 type Entity struct {
@@ -99,12 +137,9 @@ func deletePKFiles() {
 	// 遍历目录
 	err := filepath.Walk(targetDir, func(path string, info os.FileInfo, err error) error {
 		if err != nil {
-			if strings.Contains(err.Error(), ".pk") {
+			if _, ok := err.(*fs.PathError); ok {
 				return nil
 			}
-			//if _, ok := err.(fs.PathError); ok {
-			//
-			//}
 			fmt.Println(err)
 			return nil
 		}

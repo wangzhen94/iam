@@ -126,7 +126,7 @@ func (s *GenericAPIServer) Run() error {
 	defer cancel()
 	if s.healthz {
 		if err := s.ping(ctx); err != nil {
-			return nil
+			return err
 		}
 	}
 
