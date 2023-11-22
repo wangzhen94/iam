@@ -2,13 +2,12 @@ package main
 
 import (
 	"fmt"
-	"github.com/gin-gonic/gin"
-	"github.com/marmotedu/component-base/pkg/core"
 	"github.com/marmotedu/errors"
 	"github.com/wangzhen94/iam/internal/pkg/code"
 	"github.com/wangzhen94/iam/pkg/log"
 	"os"
 	"path/filepath"
+	"strings"
 )
 
 type Data struct {
@@ -65,35 +64,6 @@ func main() {
 
 	//print("GET", "/user/list", "userList", 3)
 	//print("OPTION", "/user/kkk", "userList", 3)
-	r := gin.Default()
-
-	r.GET("/user/:name", func(c *gin.Context) {
-		name := c.Params.ByName("name")
-		if err := getUser(name); err != nil {
-			core.WriteResponse(c, err, nil)
-			return
-		}
-
-		core.WriteResponse(c, nil, map[string]string{"email": name + "@foxmail.com"})
-	})
-
-	//r.Run(":7070")
-
-	ea := Entity{
-		name: "zhang",
-		attr: map[string]interface{}{
-			"li": "abk",
-		},
-	}
-
-	eb := ea.clone()
-
-	if &ea == eb {
-		fmt.Println("point equal")
-	} else {
-		fmt.Println("point not equal")
-	}
-
 }
 
 func getUser(name string) error {
@@ -129,17 +99,23 @@ func deletePKFiles() {
 	// 遍历目录
 	err := filepath.Walk(targetDir, func(path string, info os.FileInfo, err error) error {
 		if err != nil {
+			if strings.Contains(err.Error(), ".pk") {
+				return nil
+			}
+			//if _, ok := err.(fs.PathError); ok {
+			//
+			//}
 			fmt.Println(err)
 			return nil
 		}
 
 		// 检查是否是目录
 		if info.IsDir() {
-			// 检查目录下是否包含.pk文件
-			pkFileExists, otherFilesExist := checkDirectoryContents(path)
+			// 检查目录下是否包含.pk文件和其他文件
+			canDel := checkDirectoryContents(path)
 
-			// 如果包含.pk文件和其他文件，则删除.pk文件
-			if pkFileExists && otherFilesExist {
+			// 如果同时包含.pk文件和其他文件，则删除.pk文件
+			if canDel {
 				err := deletePkFile(path)
 				if err != nil {
 					fmt.Println(err)
@@ -155,10 +131,11 @@ func deletePKFiles() {
 	}
 }
 
-// 检查目录是否包含.pk文件以及其他文件
-func checkDirectoryContents(dirPath string) (pkFileExists bool, otherFilesExist bool) {
-	pkFileExists = false
-	otherFilesExist = false
+// 检查目录是否同时包含.pk文件和其他文件
+func checkDirectoryContents(dirPath string) (canDel bool) {
+	var pkFileExists = false
+	var otherFileExist = false
+	var otherDirExit = false
 
 	files, err := os.ReadDir(dirPath)
 	if err != nil {
@@ -167,23 +144,26 @@ func checkDirectoryContents(dirPath string) (pkFileExists bool, otherFilesExist 
 	}
 
 	for _, file := range files {
-		if file.IsDir() {
-			// 如果存在子目录，则递归检查
-			subdirPath := filepath.Join(dirPath, file.Name())
-			subPkFileExists, subOtherFilesExist := checkDirectoryContents(subdirPath)
-			pkFileExists = pkFileExists || subPkFileExists
-			otherFilesExist = otherFilesExist || subOtherFilesExist
+		subdirPath := filepath.Join(dirPath, file.Name())
+		subFile, err := os.Stat(subdirPath)
+		if err != nil {
+			return false
+		}
+		if subFile.IsDir() {
+			otherDirExit = true
 		} else {
-			// 检查是否是.pk文件
-			if filepath.Ext(file.Name()) == ".pk" {
+			if filepath.Ext(subdirPath) == ".pk" {
 				pkFileExists = true
 			} else {
-				otherFilesExist = true
+				otherFileExist = true
 			}
+		}
+		if pkFileExists && (otherFileExist || otherDirExit) {
+			return true
 		}
 	}
 
-	return pkFileExists, otherFilesExist
+	return false
 }
 
 // 删除目录下的.pk文件
