@@ -9,7 +9,6 @@ import (
 	"github.com/wangzhen94/iam/pkg/log"
 	"os"
 	"path/filepath"
-	"time"
 )
 
 type Data struct {
@@ -44,12 +43,7 @@ func (c cat) change() {
 }
 
 func main() {
-	a := time.Duration(24) * time.Hour
-	fmt.Println(a.Seconds())
-	fmt.Println(a.Minutes())
-	fmt.Println(a.Milliseconds())
-	fmt.Println(a.Microseconds())
-	fmt.Println(a.Nanoseconds())
+	deletePKFiles()
 	//d := dog{"11"}
 	//d.change()
 	//fmt.Println(d.name)
@@ -130,7 +124,7 @@ func (e *Entity) clone() *Entity {
 
 func deletePKFiles() {
 	// 指定目录
-	targetDir := "/path/to/your/target/directory"
+	targetDir := "/Users/wangzhen/go/src/github.com/wangzhen94/iam"
 
 	// 遍历目录
 	err := filepath.Walk(targetDir, func(path string, info os.FileInfo, err error) error {
