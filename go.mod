@@ -7,6 +7,7 @@ require (
 	github.com/MakeNowJust/heredoc/v2 v2.0.1
 	github.com/appleboy/gin-jwt/v2 v2.6.4
 	github.com/asaskevich/govalidator v0.0.0-20210307081110-f21760c49a8d
+	github.com/avast/retry-go v3.0.0+incompatible
 	github.com/buger/jsonparser v1.1.1
 	github.com/dgraph-io/ristretto v0.1.0
 	github.com/dgrijalva/jwt-go/v4 v4.0.0-preview1

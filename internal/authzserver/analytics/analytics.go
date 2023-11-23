@@ -53,7 +53,7 @@ func (r *Analytics) recordWorker() {
 	recordsBuffer := make([][]byte, 0, r.workerBufferSize)
 	lastSendTS := time.Now()
 	for {
-		var readyTosend bool
+		var readyToSend bool
 		select {
 		case record, ok := <-r.recordsChan:
 			if !ok {
@@ -68,13 +68,13 @@ func (r *Analytics) recordWorker() {
 				recordsBuffer = append(recordsBuffer, encoded)
 			}
 
-			readyTosend = uint64(len(recordsBuffer)) == r.workerBufferSize
+			readyToSend = uint64(len(recordsBuffer)) == r.workerBufferSize
 
 		case <-time.After(time.Duration(r.recordsBufferFlushInterval) * time.Millisecond):
-			readyTosend = true
+			readyToSend = true
 		}
 
-		if len(recordsBuffer) > 0 && (readyTosend || time.Since(lastSendTS) > recordsBufferForcedFlushInterval) {
+		if len(recordsBuffer) > 0 && (readyToSend || time.Since(lastSendTS) > recordsBufferForcedFlushInterval) {
 			r.store.AppendToSetPipelined(analyticsKeyName, recordsBuffer)
 			recordsBuffer = recordsBuffer[:0]
 			lastSendTS = time.Now()

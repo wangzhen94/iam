@@ -51,7 +51,7 @@ func (o *Options) Flags() (fss cliflag.NamedFlagSets) {
 	//o.FeatureOptions.AddFlags(fss.FlagSet("features"))
 	o.InsecureServing.AddFlags(fss.FlagSet("insecure serving"))
 	o.SecureServing.AddFlags(fss.FlagSet("secure serving"))
-	o.Log.AddFlags(fss.FlagSet("logs"))
+	o.Log.AddFlags(fss.FlagSet("log"))
 
 	return fss
 }

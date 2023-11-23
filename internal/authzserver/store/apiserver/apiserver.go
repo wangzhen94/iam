@@ -18,7 +18,7 @@ func (d *datastore) Secrets() store.SecretStore {
 }
 
 func (d *datastore) Policies() store.PolicyStore {
-	return nil
+	return newPolicies(d)
 }
 
 var (

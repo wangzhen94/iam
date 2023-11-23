@@ -78,7 +78,8 @@ func (c *Command) cobraCommand() *cobra.Command {
 		Use:   c.usage,
 		Short: c.desc,
 	}
-	cmd.SetOutput(os.Stdout)
+	cmd.SetOut(os.Stdout)
+	cmd.SetErr(os.Stdout)
 	cmd.Flags().SortFlags = false
 	if len(c.commands) > 0 {
 		for _, command := range c.commands {

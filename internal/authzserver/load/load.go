@@ -100,7 +100,6 @@ func startPubSubLoop() {
 
 			time.Sleep(10 * time.Second)
 			log.Warnf("Reconnecting: %s", err.Error())
-			return
 		}
 	}
 }

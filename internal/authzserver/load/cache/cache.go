@@ -4,6 +4,7 @@ import (
 	"github.com/dgraph-io/ristretto"
 	pb "github.com/marmotedu/api/proto/apiserver/v1"
 	"github.com/marmotedu/errors"
+	"github.com/ory/ladon"
 	"github.com/wangzhen94/iam/internal/authzserver/store"
 	"sync"
 )
@@ -61,7 +62,7 @@ func GetCacheInsOr(cli store.Factory) (*Cache, error) {
 		onceCache.Do(func() {
 			c := &ristretto.Config{
 				NumCounters: 1e7,
-				MaxCost:     1 << 30,
+				MaxCost:     1 << 30, // maximum cost of cache (1GB).
 				BufferItems: 64,
 				Cost:        nil,
 			}
@@ -98,4 +99,16 @@ func (c *Cache) GetSecret(key string) (*pb.SecretInfo, error) {
 
 	info := value.(*pb.SecretInfo)
 	return info, nil
+}
+
+func (c *Cache) GetPolicy(key string) ([]*ladon.DefaultPolicy, error) {
+	c.lock.Lock()
+	defer c.lock.Unlock()
+
+	ps, ok := c.policies.Get(key)
+	if !ok {
+		return nil, ErrPolicyNotFound
+	}
+
+	return ps.([]*ladon.DefaultPolicy), nil
 }

@@ -38,7 +38,7 @@ func (o *Options) Flags() (fss cliflag.NamedFlagSets) {
 	o.RedisOptions.AddFlags(fss.FlagSet("redis"))
 	o.InsecureServing.AddFlags(fss.FlagSet("insecure serving"))
 	o.SecureServing.AddFlags(fss.FlagSet("secure serving"))
-	o.Log.AddFlags(fss.FlagSet("logs"))
+	o.Log.AddFlags(fss.FlagSet("log"))
 
 	// Note: the weird ""+ in below lines seems to be the only way to get gofmt to
 	// arrange these text blocks sensibly. Grrr.
