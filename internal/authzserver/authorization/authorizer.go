@@ -20,15 +20,17 @@ func NewAuthorizer(authorizationClient AuthorizationInterface) *Authorizer {
 }
 
 func (a *Authorizer) Authorize(request *ladon.Request) *authzv1.Response {
-	log.Debug("authorize request", log.Any("request", request))
+	log.Info("authorize request", log.Any("request", request))
 
 	if err := a.warden.IsAllowed(request); err != nil {
+		log.Error("authorize failed.")
 		return &authzv1.Response{
 			Allowed: false,
 			Error:   err.Error(),
 		}
 	}
 
+	log.Info("authorize success.")
 	return &authzv1.Response{
 		Allowed: true,
 	}

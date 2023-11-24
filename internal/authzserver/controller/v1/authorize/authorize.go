@@ -8,6 +8,7 @@ import (
 	"github.com/wangzhen94/iam/internal/authzserver/authorization"
 	"github.com/wangzhen94/iam/internal/authzserver/authorization/authorizer"
 	"github.com/wangzhen94/iam/internal/pkg/code"
+	"github.com/wangzhen94/iam/pkg/log"
 )
 
 type AuthzController struct {
@@ -20,6 +21,7 @@ func NewAuthzController(store authorizer.PolicyGetter) AuthzController {
 
 func (a *AuthzController) Authorize(c *gin.Context) {
 	var r ladon.Request
+	log.Info("start authorize policy.")
 	if err := c.ShouldBind(&r); err != nil {
 		core.WriteResponse(c, errors.WithCode(code.ErrBind, err.Error()), nil)
 
