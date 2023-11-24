@@ -46,7 +46,7 @@ func installController(g *gin.Engine) *gin.Engine {
 	v1 := g.Group("/v1")
 	{
 		// user RESTful resource
-		userv1 := v1.Group("/user")
+		userv1 := v1.Group("/users")
 		{
 			userController := user.NewUserController(storeIns)
 
@@ -63,7 +63,7 @@ func installController(g *gin.Engine) *gin.Engine {
 		v1.Use(auto.AuthFunc())
 
 		// policy RESTful resource
-		policyv1 := v1.Group("/policy")
+		policyv1 := v1.Group("/policies")
 		{
 			policyController := policy.NewPolicyController(storeIns)
 
@@ -75,7 +75,7 @@ func installController(g *gin.Engine) *gin.Engine {
 		}
 
 		// secret RESTful resource
-		secretv1 := v1.Group("/secret")
+		secretv1 := v1.Group("/secrets")
 		{
 			secretController := secret.NewSecretController(storeIns)
 
