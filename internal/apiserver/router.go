@@ -89,15 +89,8 @@ func installController(g *gin.Engine) *gin.Engine {
 
 	demo := g.Group("")
 
-	demo.GET("/loglevel/:n", func(c *gin.Context) {
-		//n := c.Param("n")
-
-		/*if l, _ := strconv.Atoi(n); l > 3 {
-			log.Info("this is info ")
-		} else {
-			log.Error("eee")
-		}*/
-		mode := viper.GetString("jwt.djb")
+	demo.GET("/config/:key", func(c *gin.Context) {
+		mode := viper.GetString(c.Param("key"))
 
 		core.WriteResponse(c, nil, mode)
 	})
