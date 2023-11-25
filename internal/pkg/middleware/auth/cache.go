@@ -8,6 +8,7 @@ import (
 	"github.com/marmotedu/errors"
 	"github.com/wangzhen94/iam/internal/pkg/code"
 	"github.com/wangzhen94/iam/internal/pkg/middleware"
+	"github.com/wangzhen94/iam/pkg/log"
 	"time"
 )
 
@@ -79,6 +80,7 @@ func (cache CacheStrategy) AuthFunc() gin.HandlerFunc {
 		}
 
 		c.Set(middleware.UsernameKey, secret.Username)
+		log.Infof("user: %s, auth success", secret.Username)
 		c.Next()
 	}
 }

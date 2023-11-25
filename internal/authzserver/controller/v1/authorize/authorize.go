@@ -36,5 +36,6 @@ func (a *AuthzController) Authorize(c *gin.Context) {
 	r.Context["username"] = c.GetString("username")
 	rsp := auth.Authorize(&r)
 
+	log.Info("end authorize")
 	core.WriteResponse(c, nil, rsp)
 }

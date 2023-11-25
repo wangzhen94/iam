@@ -7,6 +7,7 @@ import (
 	"io/fs"
 	"os"
 	"path/filepath"
+	"time"
 )
 
 type Data struct {
@@ -63,9 +64,11 @@ func newOption() option {
 
 }
 func main() {
+	fmt.Println(time.Unix(1700913642, 0))
+
 	//typeAssert()
 
-	deletePKFiles()
+	//deletePKFiles()
 	//structComparePointImp()
 
 	//printType()
