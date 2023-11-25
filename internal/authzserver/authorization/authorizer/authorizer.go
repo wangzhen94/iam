@@ -1,8 +1,10 @@
 package authorizer
 
 import (
+	"github.com/marmotedu/component-base/pkg/json"
 	"github.com/ory/ladon"
 	"github.com/wangzhen94/iam/internal/authzserver/authorization"
+	"strings"
 )
 
 type PolicyGetter interface {
@@ -19,14 +21,25 @@ func NewAuthorization(getter PolicyGetter) authorization.AuthorizationInterface 
 }
 
 func (auth *Authorization) LogRejectedAccessRequest(request *ladon.Request, pool ladon.Policies, deciders ladon.Policies) {
-
-	//TODO implement me
-	panic("implement me")
+	return
 }
 
-func (auth *Authorization) LogGrantedAccessRequest(request *ladon.Request, pool ladon.Policies, deciders ladon.Policies) {
-	//TODO implement me
-	panic("implement me")
+func (auth *Authorization) LogGrantedAccessRequest(r *ladon.Request, p ladon.Policies, d ladon.Policies) {
+	//conclusion := fmt.Sprintf("policies %s allow access", joinPoliciesNames(d))
+	//rstring, pstring, dstring := convertToString(r, p, d)
+	//record := analytics.AnalyticsRecord{
+	//	TimeStamp:  time.Now().Unix(),
+	//	Username:   r.Context["username"].(string),
+	//	Effect:     ladon.AllowAccess,
+	//	Conclusion: conclusion,
+	//	Request:    rstring,
+	//	Policies:   pstring,
+	//	Deciders:   dstring,
+	//}
+	//
+	//record.SetExpiry(0)
+	//_ = analytics.GetAnalytics().RecordHit(&record)
+	return
 }
 
 // Create create a policy.
@@ -61,4 +74,21 @@ func (auth *Authorization) Get(id string) (*ladon.DefaultPolicy, error) {
 
 func (auth *Authorization) List(username string) ([]*ladon.DefaultPolicy, error) {
 	return auth.getter.GetPolicy(username)
+}
+
+func joinPoliciesNames(policies ladon.Policies) string {
+	names := []string{}
+	for _, policy := range policies {
+		names = append(names, policy.GetID())
+	}
+
+	return strings.Join(names, ", ")
+}
+
+func convertToString(r *ladon.Request, p ladon.Policies, d ladon.Policies) (string, string, string) {
+	rbytes, _ := json.Marshal(r)
+	pbytes, _ := json.Marshal(p)
+	dbytes, _ := json.Marshal(d)
+
+	return string(rbytes), string(pbytes), string(dbytes)
 }
