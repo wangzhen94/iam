@@ -15,8 +15,8 @@ type Options struct {
 	InsecureServing         *genericoptions.InsecureServingOptions `json:"insecure"       mapstructure:"insecure"`
 	SecureServing           *genericoptions.SecureServingOptions   `json:"secure"         mapstructure:"secure"`
 	RedisOptions            *genericoptions.RedisOptions           `json:"redis"          mapstructure:"redis"`
-	Log                     *log.Options                           `json:"feature"        mapstructure:"feature"`
-	AnalyticsOptions        *analytics.AnalyticsOptions            `json:"log"            mapstructure:"log"`
+	Log                     *log.Options                           `json:"log"        mapstructure:"log"`
+	AnalyticsOptions        *analytics.AnalyticsOptions            `json:"analytics"            mapstructure:"analytics"`
 }
 
 func NewOptions() *Options {
@@ -38,7 +38,7 @@ func (o *Options) Flags() (fss cliflag.NamedFlagSets) {
 	o.RedisOptions.AddFlags(fss.FlagSet("redis"))
 	o.InsecureServing.AddFlags(fss.FlagSet("insecure serving"))
 	o.SecureServing.AddFlags(fss.FlagSet("secure serving"))
-	o.Log.AddFlags(fss.FlagSet("log"))
+	o.Log.AddFlags(fss.FlagSet("logs"))
 
 	// Note: the weird ""+ in below lines seems to be the only way to get gofmt to
 	// arrange these text blocks sensibly. Grrr.
