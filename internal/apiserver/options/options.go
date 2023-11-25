@@ -1,10 +1,6 @@
 package options
 
 import (
-	//cliflag "github.com/marmotedu/component-base/pkg/cli/flag"
-	//"github.com/marmotedu/component-base/pkg/json"
-	//"github.com/marmotedu/component-base/pkg/util/idutil"
-
 	cliflag "github.com/marmotedu/component-base/pkg/cli/flag"
 	"github.com/marmotedu/component-base/pkg/json"
 	"github.com/marmotedu/component-base/pkg/util/idutil"
@@ -22,7 +18,7 @@ type Options struct {
 	RedisOptions            *genericoptions.RedisOptions           `json:"redis"    mapstructure:"redis"`
 	JwtOptions              *genericoptions.JwtOptions             `json:"jwt"      mapstructure:"jwt"`
 	Log                     *log.Options                           `json:"log"      mapstructure:"log"`
-	//FeatureOptions *genericoptions.FeatureOptions `json:"feature"  mapstructure:"feature"`
+	FeatureOptions          *genericoptions.FeatureOptions         `json:"feature"  mapstructure:"feature"`
 }
 
 // NewOptions creates a new Options object with default parameters.
@@ -36,7 +32,7 @@ func NewOptions() *Options {
 		RedisOptions:            genericoptions.NewRedisOptions(),
 		JwtOptions:              genericoptions.NewJwtOptions(),
 		Log:                     log.NewOptions(),
-		//FeatureOptions:          genericoptions.NewFeatureOptions(),
+		FeatureOptions:          genericoptions.NewFeatureOptions(),
 	}
 
 	return &o
@@ -48,7 +44,7 @@ func (o *Options) Flags() (fss cliflag.NamedFlagSets) {
 	o.GRPCOptions.AddFlags(fss.FlagSet("grpc"))
 	o.MySQLOptions.AddFlags(fss.FlagSet("mysql"))
 	o.RedisOptions.AddFlags(fss.FlagSet("redis"))
-	//o.FeatureOptions.AddFlags(fss.FlagSet("features"))
+	o.FeatureOptions.AddFlags(fss.FlagSet("features"))
 	o.InsecureServing.AddFlags(fss.FlagSet("insecure serving"))
 	o.SecureServing.AddFlags(fss.FlagSet("secure serving"))
 	o.Log.AddFlags(fss.FlagSet("logs"))

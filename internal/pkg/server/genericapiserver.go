@@ -10,6 +10,7 @@ import (
 	"github.com/marmotedu/errors"
 	"github.com/marmotedu/log"
 	"github.com/wangzhen94/iam/internal/pkg/middleware"
+	ginprometheus "github.com/zsais/go-gin-prometheus"
 	"golang.org/x/sync/errgroup"
 	"net/http"
 	"strings"
@@ -52,11 +53,11 @@ func (s *GenericAPIServer) InstallAPIs() {
 		})
 	}
 
-	//// install metric handler
-	//if s.enableMetrics {
-	//	prometheus := ginprometheus.NewPrometheus("gin")
-	//	prometheus.Use(s.Engine)
-	//}
+	// install metric handler
+	if s.enableMetrics {
+		prometheus := ginprometheus.NewPrometheus("gin")
+		prometheus.Use(s.Engine)
+	}
 
 	// install pprof handler
 	if s.enableProfiling {
@@ -72,6 +73,22 @@ func (s *GenericAPIServer) InstallAPIs() {
 func (s *GenericAPIServer) Setup() {
 	gin.DebugPrintRouteFunc = func(httpMethod, absolutePath, handlerName string, nuHandlers int) {
 		log.Infof("%-6s %-s --> %s (%d handlers)", httpMethod, absolutePath, handlerName, nuHandlers)
+	}
+}
+
+// Close graceful shutdown the api server.
+func (s *GenericAPIServer) Close() {
+	// The context is used to inform the server it has 10 seconds to finish
+	// the request it is currently handling
+	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+	defer cancel()
+
+	if err := s.secureServer.Shutdown(ctx); err != nil {
+		log.Warnf("Shutdown secure server failed: %s", err.Error())
+	}
+
+	if err := s.insecureServer.Shutdown(ctx); err != nil {
+		log.Warnf("Shutdown insecure server failed: %s", err.Error())
 	}
 }
 

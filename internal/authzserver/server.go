@@ -2,6 +2,8 @@ package authzserver
 
 import (
 	"github.com/marmotedu/errors"
+	"github.com/marmotedu/iam/pkg/shutdown"
+	"github.com/marmotedu/iam/pkg/shutdown/shutdownmanagers/posixsignal"
 	"github.com/wangzhen94/iam/internal/authzserver/analytics"
 	"github.com/wangzhen94/iam/internal/authzserver/config"
 	"github.com/wangzhen94/iam/internal/authzserver/load"
@@ -9,6 +11,7 @@ import (
 	"github.com/wangzhen94/iam/internal/authzserver/store/apiserver"
 	genericoptions "github.com/wangzhen94/iam/internal/pkg/options"
 	genericapiserver "github.com/wangzhen94/iam/internal/pkg/server"
+	"github.com/wangzhen94/iam/pkg/log"
 	"github.com/wangzhen94/iam/pkg/storage"
 	"golang.org/x/net/context"
 )
@@ -16,6 +19,7 @@ import (
 const RedisKeyPrefix = "analytics-"
 
 type authzServer struct {
+	gs               *shutdown.GracefulShutdown
 	rpcServer        string
 	clientCA         string
 	redisOptions     *genericoptions.RedisOptions
@@ -61,7 +65,24 @@ type prepareAuthzServer struct {
 func (s prepareAuthzServer) Run() error {
 	stopCh := make(chan struct{})
 
+	// start shutdown managers
+	if err := s.gs.Start(); err != nil {
+		log.Fatalf("start shutdown manager failed: %s", err.Error())
+	}
+
 	go s.genericAPIServer.Run()
+
+	// in order to ensure that the reported data is not lost,
+	// please ensure the following graceful shutdown sequence
+	s.gs.AddShutdownCallback(shutdown.ShutdownFunc(func(string) error {
+		s.genericAPIServer.Close()
+		if s.analyticsOptions.Enable {
+			analytics.GetAnalytics().Stop()
+		}
+		s.redisCancelFunc()
+
+		return nil
+	}))
 
 	<-stopCh
 	// todo debug this
@@ -69,6 +90,8 @@ func (s prepareAuthzServer) Run() error {
 }
 
 func createAuthzServer(cfg *config.Config) (*authzServer, error) {
+	gs := shutdown.New()
+	gs.AddShutdownManager(posixsignal.NewPosixSignalManager())
 
 	genericConfig, err := buildGenericConfig(cfg)
 	if err != nil {
@@ -81,6 +104,7 @@ func createAuthzServer(cfg *config.Config) (*authzServer, error) {
 	}
 
 	server := &authzServer{
+		gs:               gs,
 		rpcServer:        cfg.RPCServer,
 		clientCA:         cfg.ClientCA,
 		redisOptions:     cfg.RedisOptions,

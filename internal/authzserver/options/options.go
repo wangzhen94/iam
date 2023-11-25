@@ -15,8 +15,9 @@ type Options struct {
 	InsecureServing         *genericoptions.InsecureServingOptions `json:"insecure"       mapstructure:"insecure"`
 	SecureServing           *genericoptions.SecureServingOptions   `json:"secure"         mapstructure:"secure"`
 	RedisOptions            *genericoptions.RedisOptions           `json:"redis"          mapstructure:"redis"`
-	Log                     *log.Options                           `json:"log"        mapstructure:"log"`
-	AnalyticsOptions        *analytics.AnalyticsOptions            `json:"analytics"            mapstructure:"analytics"`
+	FeatureOptions          *genericoptions.FeatureOptions         `json:"feature"        mapstructure:"feature"`
+	Log                     *log.Options                           `json:"log"            mapstructure:"log"`
+	AnalyticsOptions        *analytics.AnalyticsOptions            `json:"analytics"      mapstructure:"analytics"`
 }
 
 func NewOptions() *Options {
@@ -27,6 +28,7 @@ func NewOptions() *Options {
 		InsecureServing:         genericoptions.NewInsecureServingOptions(),
 		SecureServing:           genericoptions.NewSecureServingOptions(),
 		RedisOptions:            genericoptions.NewRedisOptions(),
+		FeatureOptions:          genericoptions.NewFeatureOptions(),
 		Log:                     log.NewOptions(),
 		AnalyticsOptions:        analytics.NewAnalyticsOptions(),
 	}
@@ -36,6 +38,7 @@ func (o *Options) Flags() (fss cliflag.NamedFlagSets) {
 	o.GenericServerRunOptions.AddFlags(fss.FlagSet("generic"))
 	o.AnalyticsOptions.AddFlags(fss.FlagSet("analytics"))
 	o.RedisOptions.AddFlags(fss.FlagSet("redis"))
+	o.FeatureOptions.AddFlags(fss.FlagSet("features"))
 	o.InsecureServing.AddFlags(fss.FlagSet("insecure serving"))
 	o.SecureServing.AddFlags(fss.FlagSet("secure serving"))
 	o.Log.AddFlags(fss.FlagSet("logs"))

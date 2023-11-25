@@ -26,20 +26,26 @@ type AnalyticsRecord struct {
 	ExpireAt   time.Time `json:"expireAt"   bson:"expireAt"`
 }
 
+var analytics *Analytics
+
 type Analytics struct {
 	store                      storage.AnalyticsHandler
 	poolSize                   int
 	recordsChan                chan *AnalyticsRecord
 	workerBufferSize           uint64
 	recordsBufferFlushInterval uint64
-	shouldShop                 uint32
+	shouldStop                 uint32
 	poolWg                     sync.WaitGroup
+}
+
+func GetAnalytics() *Analytics {
+	return analytics
 }
 
 func (a *Analytics) Start() {
 	a.store.Connect()
 
-	atomic.SwapUint32(&a.shouldShop, 0)
+	atomic.SwapUint32(&a.shouldStop, 0)
 	for i := 0; i < a.poolSize; i++ {
 		a.poolWg.Add(1)
 		go a.recordWorker()
@@ -84,6 +90,20 @@ func (r *Analytics) recordWorker() {
 
 }
 
+// RecordHit will store an AnalyticsRecord in Redis.
+func (r *Analytics) RecordHit(record *AnalyticsRecord) error {
+	// check if we should stop sending records 1st
+	if atomic.LoadUint32(&r.shouldStop) > 0 {
+		return nil
+	}
+
+	// just send record to channel consumed by pool of workers
+	// leave all data crunching and Redis I/O work for pool workers
+	r.recordsChan <- record
+
+	return nil
+}
+
 //var analytics *
 
 func NewAnalytics(options *AnalyticsOptions, store storage.AnalyticsHandler) *Analytics {
@@ -94,7 +114,7 @@ func NewAnalytics(options *AnalyticsOptions, store storage.AnalyticsHandler) *An
 
 	recordsChan := make(chan *AnalyticsRecord, recordsBufferSize)
 
-	analytics := &Analytics{
+	analytics = &Analytics{
 		store:                      store,
 		poolSize:                   ps,
 		recordsChan:                recordsChan,
@@ -103,4 +123,16 @@ func NewAnalytics(options *AnalyticsOptions, store storage.AnalyticsHandler) *An
 	}
 
 	return analytics
+}
+
+// Stop stop the analytics service.
+func (r *Analytics) Stop() {
+	// flag to stop sending records into channel
+	atomic.SwapUint32(&r.shouldStop, 1)
+
+	// close channel to stop workers
+	close(r.recordsChan)
+
+	// wait for all workers to be done
+	r.poolWg.Wait()
 }

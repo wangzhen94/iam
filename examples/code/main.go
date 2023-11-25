@@ -7,6 +7,8 @@ import (
 	"io/fs"
 	"os"
 	"path/filepath"
+	"sync"
+	"time"
 )
 
 type Data struct {
@@ -62,12 +64,34 @@ func newOption() option {
 	return &opt{}
 
 }
+
+type WgStruct struct {
+	name string
+	wg   sync.WaitGroup
+}
+
 func main() {
 	//fmt.Println(time.Unix(1700913642, 0))
 
+	w := &WgStruct{
+		name: "li",
+	}
+
+	start := time.Now()
+	for i := 0; i < 5; i++ {
+		w.wg.Add(1)
+		go func() {
+			defer w.wg.Done()
+			time.Sleep(time.Second * 3)
+		}()
+	}
+
+	w.wg.Wait()
+	fmt.Println(time.Since(start))
+
 	//typeAssert()
 
-	deletePKFiles()
+	//deletePKFiles()
 	//structComparePointImp()
 
 	//printType()

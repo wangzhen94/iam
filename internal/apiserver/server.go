@@ -4,6 +4,8 @@ import (
 	"context"
 	"fmt"
 	pb "github.com/marmotedu/api/proto/apiserver/v1"
+	"github.com/marmotedu/iam/pkg/shutdown"
+	"github.com/marmotedu/iam/pkg/shutdown/shutdownmanagers/posixsignal"
 	"github.com/wangzhen94/iam/internal/apiserver/config"
 	cachev1 "github.com/wangzhen94/iam/internal/apiserver/controller/v1/cache"
 	"github.com/wangzhen94/iam/internal/apiserver/store"
@@ -21,15 +23,15 @@ import (
 )
 
 type apiServer struct {
-	//gs           *shutdown.GracefulShutdown
+	gs               *shutdown.GracefulShutdown
 	redisOptions     *genericoptions.RedisOptions
 	gRPCAPIServer    *grpcAPIServer
 	genericAPIServer *genericapiserver.GenericAPIServer
 }
 
 func createAPIServer(cfg *config.Config) (*apiServer, error) {
-	//gs := shutdown.New()
-	//gs.AddShutdownManager(posixsignal.NewPosixSignalManager())
+	gs := shutdown.New()
+	gs.AddShutdownManager(posixsignal.NewPosixSignalManager())
 
 	genericConfig, err := buildGenericConfig(cfg)
 	if err != nil {
@@ -51,7 +53,7 @@ func createAPIServer(cfg *config.Config) (*apiServer, error) {
 	}
 
 	server := &apiServer{
-		//gs:               gs,
+		gs:               gs,
 		redisOptions:     cfg.RedisOptions,
 		genericAPIServer: genericServer,
 		gRPCAPIServer:    extraServer,
@@ -86,27 +88,39 @@ func (s *apiServer) PrepareRun() preparedAPIServer {
 
 	s.initRedisStore()
 
+	s.gs.AddShutdownCallback(shutdown.ShutdownFunc(func(string) error {
+		mysqlStore, _ := mysql.GetMySQLFactoryOr(nil)
+		if mysqlStore != nil {
+			_ = mysqlStore.Close()
+		}
+
+		s.gRPCAPIServer.Close()
+		s.genericAPIServer.Close()
+
+		return nil
+	}))
+
 	return preparedAPIServer{s}
 }
 
 func (s preparedAPIServer) Run() error {
 	go s.gRPCAPIServer.Run()
 
-	////start shutdown managers
-	//if err := s.gs.Start(); err != nil {
-	//	log.Fatalf("start shutdown manager failed: %s", err.Error())
-	//}
+	//start shutdown managers
+	if err := s.gs.Start(); err != nil {
+		log.Fatalf("start shutdown manager failed: %s", err.Error())
+	}
 
 	return s.genericAPIServer.Run()
 }
 
 func (s *apiServer) initRedisStore() {
-	ctx, _ := context.WithCancel(context.Background())
-	//s.gs.AddShutdownCallback(shutdown.ShutdownFunc(func(string) error {
-	//	cancel()
-	//
-	//	return nil
-	//}))
+	ctx, cancel := context.WithCancel(context.Background())
+	s.gs.AddShutdownCallback(shutdown.ShutdownFunc(func(string) error {
+		cancel()
+
+		return nil
+	}))
 
 	config := &storage.Config{
 		Host:                  s.redisOptions.Host,
