@@ -23,10 +23,10 @@ func (a *Authorizer) Authorize(request *ladon.Request) *authzv1.Response {
 	log.Info("authorize request", log.Any("request", request))
 
 	if err := a.warden.IsAllowed(request); err != nil {
-		log.Error("authorize failed.")
+		log.Info("authorize failed.")
 		return &authzv1.Response{
-			Allowed: false,
-			Error:   err.Error(),
+			Denied: true,
+			Error:  err.Error(),
 		}
 	}
 
