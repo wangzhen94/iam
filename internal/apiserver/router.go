@@ -16,7 +16,6 @@ import (
 	"github.com/wangzhen94/iam/internal/pkg/code"
 	"github.com/wangzhen94/iam/internal/pkg/middleware"
 	"github.com/wangzhen94/iam/internal/pkg/middleware/auth"
-
 	_ "github.com/wangzhen94/iam/pkg/validator"
 )
 
@@ -52,7 +51,6 @@ func installController(g *gin.Engine) *gin.Engine {
 
 			userv1.POST("", userController.Create)
 			userv1.Use(auto.AuthFunc(), middleware.Validation())
-			// v1.PUT("/find_password", userController.FindPassword)
 			userv1.DELETE(":name", userController.Delete) // admin api
 			userv1.PUT(":name/change_password", userController.ChangePassword)
 			userv1.PUT(":name", userController.Update)

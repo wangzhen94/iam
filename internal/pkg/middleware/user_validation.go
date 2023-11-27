@@ -24,7 +24,7 @@ func Validation() gin.HandlerFunc {
 
 					return
 				}
-			case "/v1/user/:name", "/v1/user/:name/change_password":
+			case "/v1/users/:name", "/v1/users/:name/change_password":
 				username := c.GetString("username")
 				if c.Request.Method == http.MethodDelete ||
 					(c.Request.Method != http.MethodDelete && username != c.Param("name")) {

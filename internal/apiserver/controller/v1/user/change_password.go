@@ -45,7 +45,7 @@ func (u *UserController) ChangePassword(c *gin.Context) {
 		return
 	}
 
-	if err := user.Compare(r.OldPassword); err != nil {
+	if err = user.Compare(r.OldPassword); err != nil {
 		core.WriteResponse(c, errors.WithCode(code.ErrPasswordIncorrect, err.Error()), nil)
 
 		return

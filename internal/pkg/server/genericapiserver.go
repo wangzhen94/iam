@@ -6,9 +6,11 @@ import (
 	"github.com/gin-contrib/pprof"
 	"github.com/gin-gonic/gin"
 	"github.com/marmotedu/component-base/pkg/core"
+	metav1 "github.com/marmotedu/component-base/pkg/meta/v1"
 	"github.com/marmotedu/component-base/pkg/version"
 	"github.com/marmotedu/errors"
 	"github.com/marmotedu/log"
+	"github.com/wangzhen94/iam/internal/pkg/code"
 	"github.com/wangzhen94/iam/internal/pkg/middleware"
 	ginprometheus "github.com/zsais/go-gin-prometheus"
 	"golang.org/x/sync/errgroup"
@@ -97,6 +99,7 @@ func (s *GenericAPIServer) InstallMiddlewares() {
 	// necessary middlewares
 	s.Use(middleware.RequestID())
 	s.Use(middleware.Context())
+	//s.Use(validateId())
 
 	// install custom middlewares
 	for _, m := range s.middlewares {
@@ -109,6 +112,29 @@ func (s *GenericAPIServer) InstallMiddlewares() {
 
 		log.Infof("install middleware: %s", m)
 		s.Use(mw)
+	}
+}
+
+func validateId() func(c *gin.Context) {
+	return func(c *gin.Context) {
+		method := c.Request.Method
+		var r metav1.ObjectMeta
+		switch method {
+		case http.MethodPost:
+			err := c.ShouldBindJSON(&r)
+			if err != nil || r.ID != 0 {
+				core.WriteResponse(c, errors.WithCode(code.ErrValidation, "create id must null"), nil)
+				c.Abort()
+			}
+		case http.MethodPut:
+			err := c.ShouldBindJSON(&r)
+			if err != nil || r.ID == 0 {
+				core.WriteResponse(c, errors.WithCode(code.ErrValidation, "update id must not null"), nil)
+				c.Abort()
+			}
+		default:
+			c.Next()
+		}
 	}
 }
 
