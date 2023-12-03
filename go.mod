@@ -13,12 +13,15 @@ require (
 	github.com/dgrijalva/jwt-go/v4 v4.0.0-preview1
 	github.com/fatih/color v1.13.0
 	github.com/ghodss/yaml v1.0.0
+	github.com/gin-contrib/cors v1.3.1
 	github.com/gin-contrib/pprof v1.3.0
 	github.com/gin-gonic/gin v1.7.4
 	github.com/go-playground/validator/v10 v10.9.0
 	github.com/go-redis/redis/v7 v7.4.1
 	github.com/go-redis/redis/v8 v8.11.4
+	github.com/go-redsync/redsync/v4 v4.4.2
 	github.com/golang/mock v1.6.0
+	github.com/influxdata/influxdb v1.9.4
 	github.com/jinzhu/gorm v1.9.16
 	github.com/kelseyhightower/envconfig v1.4.0
 	github.com/likexian/host-stat-go v0.0.0-20190516151207-c9cf36dd6ce9
@@ -45,8 +48,10 @@ require (
 	github.com/spf13/cobra v1.2.1
 	github.com/spf13/pflag v1.0.5
 	github.com/spf13/viper v1.9.0
+	github.com/tpkeeper/gin-dump v1.0.1
 	github.com/vinllen/mgo v0.0.0-20220329061231-e5ecea62f194
 	github.com/vmihailenco/msgpack/v5 v5.3.4
+	github.com/zsais/go-gin-prometheus v0.1.0
 	go.uber.org/zap v1.19.1
 	golang.org/x/net v0.3.0
 	golang.org/x/sync v0.0.0-20220722155255-886fb9371eb4
@@ -62,13 +67,11 @@ require (
 	github.com/beorn7/perks v1.0.1 // indirect
 	github.com/cespare/xxhash/v2 v2.1.2 // indirect
 	github.com/davecgh/go-spew v1.1.1 // indirect
-	github.com/denisenkom/go-mssqldb v0.10.0 // indirect
 	github.com/dgrijalva/jwt-go v3.2.0+incompatible // indirect
 	github.com/dgryski/go-rendezvous v0.0.0-20200823014737-9f7001d12a5f // indirect
 	github.com/dlclark/regexp2 v1.2.0 // indirect
 	github.com/dustin/go-humanize v1.0.0 // indirect
 	github.com/fsnotify/fsnotify v1.5.1 // indirect
-	github.com/gin-contrib/cors v1.3.1 // indirect
 	github.com/gin-contrib/sse v0.1.0 // indirect
 	github.com/go-playground/locales v0.14.0 // indirect
 	github.com/go-playground/universal-translator v0.18.0 // indirect
@@ -79,6 +82,8 @@ require (
 	github.com/google/uuid v1.1.2 // indirect
 	github.com/gosuri/uitable v0.0.4 // indirect
 	github.com/h2non/filetype v1.1.1 // indirect
+	github.com/hashicorp/errwrap v1.0.0 // indirect
+	github.com/hashicorp/go-multierror v1.1.0 // indirect
 	github.com/hashicorp/golang-lru v0.5.4 // indirect
 	github.com/hashicorp/hcl v1.0.0 // indirect
 	github.com/inconshreveable/mousetrap v1.0.0 // indirect
@@ -86,6 +91,7 @@ require (
 	github.com/jinzhu/now v1.1.3 // indirect
 	github.com/josharian/intern v1.0.0 // indirect
 	github.com/json-iterator/go v1.1.12 // indirect
+	github.com/klauspost/compress v1.9.8 // indirect
 	github.com/leodido/go-urn v1.2.1 // indirect
 	github.com/likexian/gokit v0.0.0-20190515154418-0f6bc9e9ef89 // indirect
 	github.com/magiconair/properties v1.8.5 // indirect
@@ -97,6 +103,7 @@ require (
 	github.com/modern-go/reflect2 v1.0.2 // indirect
 	github.com/pborman/uuid v1.2.0 // indirect
 	github.com/pelletier/go-toml v1.9.4 // indirect
+	github.com/pierrec/lz4 v2.6.0+incompatible // indirect
 	github.com/pkg/errors v0.9.1 // indirect
 	github.com/pmezard/go-difflib v1.0.0 // indirect
 	github.com/prometheus/client_model v0.2.0 // indirect
@@ -110,12 +117,10 @@ require (
 	github.com/spf13/jwalterweatherman v1.1.0 // indirect
 	github.com/stretchr/testify v1.8.1 // indirect
 	github.com/subosito/gotenv v1.2.0 // indirect
-	github.com/tpkeeper/gin-dump v1.0.1 // indirect
 	github.com/ugorji/go/codec v1.2.7 // indirect
 	github.com/vmihailenco/tagparser/v2 v2.0.0 // indirect
 	github.com/xdg/scram v0.0.0-20180814205039-7eeb5667e42c // indirect
 	github.com/xdg/stringprep v1.0.0 // indirect
-	github.com/zsais/go-gin-prometheus v0.1.0 // indirect
 	go.uber.org/atomic v1.7.0 // indirect
 	go.uber.org/multierr v1.6.0 // indirect
 	golang.org/x/crypto v0.4.0 // indirect
