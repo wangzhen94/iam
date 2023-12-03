@@ -2,8 +2,6 @@ package authzserver
 
 import (
 	"github.com/marmotedu/errors"
-	"github.com/marmotedu/iam/pkg/shutdown"
-	"github.com/marmotedu/iam/pkg/shutdown/shutdownmanagers/posixsignal"
 	"github.com/wangzhen94/iam/internal/authzserver/analytics"
 	"github.com/wangzhen94/iam/internal/authzserver/config"
 	"github.com/wangzhen94/iam/internal/authzserver/load"
@@ -12,6 +10,8 @@ import (
 	genericoptions "github.com/wangzhen94/iam/internal/pkg/options"
 	genericapiserver "github.com/wangzhen94/iam/internal/pkg/server"
 	"github.com/wangzhen94/iam/pkg/log"
+	"github.com/wangzhen94/iam/pkg/shutdown"
+	"github.com/wangzhen94/iam/pkg/shutdown/shutdownmanagers/posixsignal"
 	"github.com/wangzhen94/iam/pkg/storage"
 	"golang.org/x/net/context"
 )
