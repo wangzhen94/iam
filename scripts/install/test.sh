@@ -79,7 +79,7 @@ iam::test::secret()
 
   # 5. 修改 secret0 密钥
   ${UCURL} "${Header}" "${token}" http://127.0.0.1:8080/v1/secrets/secret0 \
-    -d'{"expires":0,"description":"admin secret(modified)"}'; echo
+    -d'{"expires":1708786071,"description":"admin secret(modified)"}'; echo
 
   # 6. 删除 secret0 密钥
   ${DCURL} "${token}" http://127.0.0.1:8080/v1/secrets/secret0; echo
@@ -135,7 +135,7 @@ iam::test::authz()
   ${DCURL} "${token}" http://127.0.0.1:8080/v1/secrets/authzsecret; echo
 
   # 4. 创建 authzsecret 密钥
-  secret=$(${CCURL} "${Header}" "${token}" http://127.0.0.1:8080/v1/secrets -d'{"metadata":{"name":"authzsecret"},"expires":0,"description":"admin secret"}')
+  secret=$(${CCURL} "${Header}" "${token}" http://127.0.0.1:8080/v1/secrets -d'{"metadata":{"name":"authzsecret"},"expires":1708786071,"description":"admin secret"}')
   secretID=$(echo ${secret} | grep -Po 'secretID[" :]+\K[^"]+')
   secretKey=$(echo ${secret} | grep -Po 'secretKey[" :]+\K[^"]+')
 
@@ -146,7 +146,7 @@ iam::test::authz()
   # 注意这里要 sleep 3s 等待 iam-authz-server 将新建的密钥同步到其内存中
   echo "wait 3s to allow iam-authz-server to sync information into its memory ..."
   sleep 3
-  ret=`$CCURL "${Header}" -H"Authorization: Bearer ${token}" http://${INSECURE_AUTHZSERVER}/v1/authz \
+  ret=`$CCURL "${Header}" -H"Authorization: Bearer ${token}" http://127.0.0.1:9090/v1/authz \
     -d'{"subject":"users:maria","action":"delete","resource":"resources:articles:ladon-introduction","context":{"remoteIPAddress":"192.168.0.5"}}' | grep -Po 'allowed[" :]+\K\w+'`
 
   if [ "$ret" != "true" ];then
@@ -191,7 +191,7 @@ iam::test::real_pump_test()
   sleep 3
 
   # 4. 访问 /v1/authz 接口进行资源授权
-  $CCURL "${Header}" -H"Authorization: Bearer ${token}" http://${INSECURE_AUTHZSERVER}/v1/authz \
+  $CCURL "${Header}" -H"Authorization: Bearer ${token}" http://127.0.0.1:9090/v1/authz \
     -d'{"subject":"users:maria","action":"delete","resource":"resources:articles:ladon-introduction","context":{"remoteIPAddress":"192.168.0.5"}}' &>/dev/null
 
   # 这里要 sleep 5s，等待 iam-pump 将 Redis 中的日志，分析并转存到 MongoDB 中
