@@ -70,9 +70,51 @@ type WgStruct struct {
 	wg   sync.WaitGroup
 }
 
-func main() {
-	//fmt.Println(time.Unix(1700913642, 0))
+func example() {
+	defer func() {
+		if r := recover(); r != nil {
+			fmt.Println("Recovered:", r)
+		}
+	}()
 
+	// 模拟恐慌
+	panic("出现问题了！")
+}
+
+func getPointOfInterface() change {
+	return &cat{name: "bingan"}
+}
+
+func main() {
+	fmt.Println(time.Unix(1710913642, 0))
+
+	//recoverDemo()
+
+	//waitGroupDemo()
+
+	//typeAssert()
+
+	//deletePKFiles()
+	//structComparePointImp()
+
+	//printType()
+}
+
+func recoverDemo() {
+	fmt.Println("恐慌前。")
+
+	// 调用会触发恐慌的函数
+	example()
+
+	// 不使用 defer 延迟执行，不会恢复
+	/*if r := recover(); r != nil {
+		fmt.Println("Recovered:", r)
+	}*/
+
+	fmt.Println("恐慌后。")
+}
+
+func waitGroupDemo() {
 	w := &WgStruct{
 		name: "li",
 	}
@@ -88,13 +130,6 @@ func main() {
 
 	w.wg.Wait()
 	fmt.Println(time.Since(start))
-
-	//typeAssert()
-
-	//deletePKFiles()
-	//structComparePointImp()
-
-	//printType()
 }
 
 func printType() {

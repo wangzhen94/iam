@@ -7,7 +7,6 @@ import (
 	"github.com/go-redis/redis/v7"
 	"github.com/marmotedu/component-base/pkg/json"
 	"github.com/wangzhen94/iam/pkg/log"
-	"sync"
 )
 
 type NotificationCommand string
@@ -30,12 +29,6 @@ func (n *Notification) Sign() {
 	hash := sha256.Sum256([]byte(string(n.Command) + n.Payload))
 	n.Signature = hex.EncodeToString(hash[:])
 }
-
-var reloadQueue = make(chan func())
-
-var requeueLock sync.Mutex
-
-var requeue []func()
 
 func handleRedisEvent(v interface{}, handled func(NotificationCommand), reloaded func()) {
 	message, ok := v.(*redis.Message)

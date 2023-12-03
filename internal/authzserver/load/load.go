@@ -26,6 +26,12 @@ func (l *Load) Start() {
 	l.DoReload()
 }
 
+var reloadQueue = make(chan func())
+
+var requeueLock sync.Mutex
+
+var requeue []func()
+
 func (l *Load) reloadQueueLoop(cb ...func()) {
 	for {
 		select {
@@ -72,7 +78,7 @@ func (l *Load) reloadLoop(complete ...func()) {
 
 func shouldReload() ([]func(), bool) {
 	requeueLock.Lock()
-	defer requeueLock.Lock()
+	defer requeueLock.Unlock()
 
 	if len(requeue) == 0 {
 		return nil, false

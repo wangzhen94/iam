@@ -191,6 +191,7 @@ func (c *completedExtraConfig) New() (*grpcAPIServer, error) {
 	if err != nil {
 		log.Fatalf("Failed to get cache instance: %s", err.Error())
 	}
+	// todo 注册pb
 	pb.RegisterCacheServer(grpcServer, cacheIns)
 
 	reflection.Register(grpcServer)
