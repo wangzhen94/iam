@@ -30,7 +30,8 @@ func New(opts *Options) (*gorm.DB, error) {
 		"Local")
 
 	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{
-		Logger: opts.Logger,
+		Logger:      opts.Logger,
+		PrepareStmt: true,
 	})
 	if err != nil {
 		return nil, err

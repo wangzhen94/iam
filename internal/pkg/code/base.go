@@ -84,4 +84,7 @@ const (
 
 	// ErrDecodingYaml - 500: Yaml data could not be decoded.
 	ErrDecodingYaml
+
+	// ErrDemoTest - 500: Test codeGender.
+	ErrDemoTest
 )
