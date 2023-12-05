@@ -86,15 +86,13 @@ func getPointOfInterface() change {
 }
 
 func main() {
-	fmt.Println(time.Now().Add(2000 * time.Hour).Unix())
-
 	//recoverDemo()
 
 	//waitGroupDemo()
 
 	//typeAssert()
 
-	//deletePKFiles()
+	deletePKFiles()
 	//structComparePointImp()
 
 	//printType()
