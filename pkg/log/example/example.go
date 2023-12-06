@@ -9,6 +9,7 @@ import (
 	"flag"
 
 	"github.com/wangzhen94/iam/pkg/log"
+	golog "log"
 )
 
 var (
@@ -19,6 +20,13 @@ var (
 )
 
 func main() {
+	//MyLogTest()
+	logger := golog.Default()
+
+	logger.Printf("sss kkk %s", "12")
+}
+
+func MyLogTest() {
 	flag.BoolVar(&h, "h", false, "Print this help.")
 	flag.IntVar(&level, "l", 0, "Log level.")
 	flag.StringVar(&format, "f", "console", "log output format.")

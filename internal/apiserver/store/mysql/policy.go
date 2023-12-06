@@ -80,7 +80,7 @@ func (p *policies) Get(ctx context.Context, username string, name string, opts m
 
 func (p *policies) List(ctx context.Context, username string, opts metav1.ListOptions) (*v1.PolicyList, error) {
 	ret := &v1.PolicyList{}
-	ol := gormutil.Unpointer(opts.Offset, opts.Limit)
+	ol := gormutil.UnPointer(opts.Offset, opts.Limit)
 
 	if username != "" {
 		p.db = p.db.Where("username = ?", username)

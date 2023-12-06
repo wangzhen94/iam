@@ -48,12 +48,12 @@ func main() {
 	lv := log.WithValues("X-Request-ID", "7a7b9f24-4cae-4b2a-9464-69088b45b904")
 
 	// Context使用
-	lv.Infof("Start to call pirntString function")
+	lv.Infof("Start to call printString function")
 	ctx := lv.WithContext(context.Background())
-	pirntString(ctx, "World")
+	printString(ctx, "World")
 }
 
-func pirntString(ctx context.Context, str string) {
+func printString(ctx context.Context, str string) {
 	lc := log.FromContext(ctx)
 	lc.Infof("Hello %s", str)
 }

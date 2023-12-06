@@ -50,7 +50,8 @@ func installController(g *gin.Engine) *gin.Engine {
 			userController := user.NewUserController(storeIns)
 
 			userv1.POST("", userController.Create)
-			userv1.Use(auto.AuthFunc(), middleware.Validation())
+			//userv1.Use(auto.AuthFunc(), middleware.Validation())
+			userv1.Use(headUsername(), middleware.Validation())
 			userv1.DELETE(":name", userController.Delete) // admin api
 			userv1.PUT(":name/change_password", userController.ChangePassword)
 			userv1.PUT(":name", userController.Update)
@@ -58,10 +59,11 @@ func installController(g *gin.Engine) *gin.Engine {
 			userv1.GET(":name", userController.Get) // admin api
 		}
 
-		v1.Use(auto.AuthFunc())
+		//v1.Use(auto.AuthFunc())
+		v1.Use(headUsername())
 
 		// policy RESTful resource
-		policyv1 := v1.Group("/policies")
+		policyv1 := v1.Group("/policies", middleware.Publish())
 		{
 			policyController := policy.NewPolicyController(storeIns)
 
@@ -73,7 +75,7 @@ func installController(g *gin.Engine) *gin.Engine {
 		}
 
 		// secret RESTful resource
-		secretv1 := v1.Group("/secrets")
+		secretv1 := v1.Group("/secrets", middleware.Publish())
 		{
 			secretController := secret.NewSecretController(storeIns)
 
@@ -94,4 +96,13 @@ func installController(g *gin.Engine) *gin.Engine {
 	})
 
 	return g
+}
+
+func headUsername() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		username := c.GetHeader("name")
+		if username != "" {
+			c.Set("username", username)
+		}
+	}
 }

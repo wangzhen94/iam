@@ -57,7 +57,7 @@ func (s *Secrets) Get(ctx context.Context, username string, name string, opts me
 }
 func (s *Secrets) List(ctx context.Context, username string, opts metav1.ListOptions) (*v1.SecretList, error) {
 	ret := &v1.SecretList{}
-	ol := gormutil.Unpointer(opts.Offset, opts.Limit)
+	ol := gormutil.UnPointer(opts.Offset, opts.Limit)
 
 	if username != "" {
 		s.db = s.db.Where("username = ?", username)

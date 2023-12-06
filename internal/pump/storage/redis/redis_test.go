@@ -7,7 +7,7 @@ package redis
 import (
 	"testing"
 
-	genericoptions "github.com/marmotedu/iam/internal/pkg/options"
+	genericoptions "github.com/wangzhen94/iam/internal/pkg/options"
 )
 
 func TestRedisAddressConfiguration(t *testing.T) {

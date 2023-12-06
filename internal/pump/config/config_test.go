@@ -1,14 +1,9 @@
-// Copyright 2020 Lingfei Kong <colin404@foxmail.com>. All rights reserved.
-// Use of this source code is governed by a MIT style
-// license that can be found in the LICENSE file.
-
 package config
 
 import (
+	"github.com/wangzhen94/iam/internal/pump/options"
 	"reflect"
 	"testing"
-
-	"github.com/marmotedu/iam/internal/pump/options"
 )
 
 func TestCreateConfigFromOptions(t *testing.T) {
@@ -27,7 +22,9 @@ func TestCreateConfigFromOptions(t *testing.T) {
 			args: args{
 				opts: opts,
 			},
-			want:    &Config{opts},
+			want: &Config{
+				opts,
+			},
 			wantErr: false,
 		},
 	}
@@ -39,7 +36,7 @@ func TestCreateConfigFromOptions(t *testing.T) {
 				return
 			}
 			if !reflect.DeepEqual(got, tt.want) {
-				t.Errorf("CreateConfigFromOptions() = %v, want %v", got, tt.want)
+				t.Errorf("CreateConfigFromOptions() got = %v, want %v", got, tt.want)
 			}
 		})
 	}

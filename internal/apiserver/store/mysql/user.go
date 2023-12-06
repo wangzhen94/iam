@@ -66,7 +66,7 @@ func (u *users) Get(ctx context.Context, username string, opts metav1.GetOptions
 
 func (u *users) List(ctx context.Context, opts metav1.ListOptions) (*v1.UserList, error) {
 	ret := &v1.UserList{}
-	ol := gormutil.Unpointer(opts.Offset, opts.Limit)
+	ol := gormutil.UnPointer(opts.Offset, opts.Limit)
 
 	selector, _ := fields.ParseSelector(opts.FieldSelector)
 	username, _ := selector.RequiresExactMatch("name")
@@ -84,7 +84,7 @@ func (u *users) List(ctx context.Context, opts metav1.ListOptions) (*v1.UserList
 
 func (u *users) ListOptional(ctx context.Context, opts metav1.ListOptions) (*v1.UserList, error) {
 	ret := &v1.UserList{}
-	ol := gormutil.Unpointer(opts.Offset, opts.Limit)
+	ol := gormutil.UnPointer(opts.Offset, opts.Limit)
 
 	where := v1.User{}
 	whereNot := v1.User{
