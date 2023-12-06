@@ -54,3 +54,10 @@ func TestOutDir(t *testing.T) {
 	}
 
 }
+
+func BenchmarkOutDir(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		OutDir("./")
+		OutDir("../flag")
+	}
+}

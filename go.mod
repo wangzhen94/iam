@@ -53,10 +53,10 @@ require (
 	github.com/vmihailenco/msgpack/v5 v5.3.4
 	github.com/zsais/go-gin-prometheus v0.1.0
 	go.uber.org/zap v1.19.1
-	golang.org/x/net v0.3.0
-	golang.org/x/sync v0.0.0-20220722155255-886fb9371eb4
-	golang.org/x/text v0.5.0
-	golang.org/x/tools v0.1.12
+	golang.org/x/net v0.19.0
+	golang.org/x/sync v0.5.0
+	golang.org/x/text v0.14.0
+	golang.org/x/tools v0.16.0
 	google.golang.org/grpc v1.41.0
 	gorm.io/driver/mysql v1.1.2
 	gorm.io/gorm v1.22.4
@@ -123,9 +123,9 @@ require (
 	github.com/xdg/stringprep v1.0.0 // indirect
 	go.uber.org/atomic v1.7.0 // indirect
 	go.uber.org/multierr v1.6.0 // indirect
-	golang.org/x/crypto v0.4.0 // indirect
-	golang.org/x/mod v0.6.0-dev.0.20220419223038-86c51ed26bb4 // indirect
-	golang.org/x/sys v0.3.0 // indirect
+	golang.org/x/crypto v0.16.0 // indirect
+	golang.org/x/mod v0.14.0 // indirect
+	golang.org/x/sys v0.15.0 // indirect
 	google.golang.org/genproto v0.0.0-20210828152312-66f60bf46e71 // indirect
 	google.golang.org/protobuf v1.28.1 // indirect
 	gopkg.in/ini.v1 v1.63.2 // indirect

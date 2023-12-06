@@ -27,6 +27,10 @@ func (ds *datastore) Policies() store.PolicyStore {
 	return newPolicies(ds)
 }
 
+func (ds *datastore) PolicyAudits() store.PolicyAuditStore {
+	return newPolicyAudits(ds)
+}
+
 func (ds *datastore) Close() error {
 	db, err := ds.db.DB()
 	if err != nil {
