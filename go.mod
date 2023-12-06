@@ -24,6 +24,7 @@ require (
 	github.com/influxdata/influxdb v1.9.4
 	github.com/jinzhu/gorm v1.9.16
 	github.com/kelseyhightower/envconfig v1.4.0
+	github.com/likexian/gokit v0.0.0-20190515154418-0f6bc9e9ef89
 	github.com/likexian/host-stat-go v0.0.0-20190516151207-c9cf36dd6ce9
 	github.com/marmotedu/api v1.6.3
 	github.com/marmotedu/component-base v1.6.2
@@ -93,7 +94,6 @@ require (
 	github.com/json-iterator/go v1.1.12 // indirect
 	github.com/klauspost/compress v1.9.8 // indirect
 	github.com/leodido/go-urn v1.2.1 // indirect
-	github.com/likexian/gokit v0.0.0-20190515154418-0f6bc9e9ef89 // indirect
 	github.com/magiconair/properties v1.8.5 // indirect
 	github.com/mailru/easyjson v0.7.7 // indirect
 	github.com/mattn/go-colorable v0.1.9 // indirect
@@ -126,7 +126,6 @@ require (
 	golang.org/x/crypto v0.4.0 // indirect
 	golang.org/x/mod v0.6.0-dev.0.20220419223038-86c51ed26bb4 // indirect
 	golang.org/x/sys v0.3.0 // indirect
-	golang.org/x/time v0.0.0-20210723032227-1f47c861a9ac // indirect
 	google.golang.org/genproto v0.0.0-20210828152312-66f60bf46e71 // indirect
 	google.golang.org/protobuf v1.28.1 // indirect
 	gopkg.in/ini.v1 v1.63.2 // indirect
