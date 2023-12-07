@@ -117,7 +117,7 @@ func (u *userService) ListWithBadPerformance(ctx context.Context, opts metav1.Li
 
 	infos := make([]*v1.User, 0)
 	for _, user := range users.Items {
-		//policies, err := u.store.Policies().List(ctx, user.Name, metav1.ListOptions{})
+		policies, err := u.store.Policies().List(ctx, user.Name, metav1.ListOptions{})
 		if err != nil {
 			return nil, nil
 		}
@@ -132,7 +132,7 @@ func (u *userService) ListWithBadPerformance(ctx context.Context, opts metav1.Li
 			Nickname:    user.Nickname,
 			Email:       user.Email,
 			Phone:       user.Phone,
-			TotalPolicy: 0,
+			TotalPolicy: policies.TotalCount,
 		})
 	}
 

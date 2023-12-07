@@ -12,9 +12,9 @@ import (
 type SecretSrv interface {
 	Create(ctx context.Context, secret *v1.Secret, opts metav1.CreateOptions) error
 	Update(ctx context.Context, secret *v1.Secret, opts metav1.UpdateOptions) error
-	Delete(ctx context.Context, username string, secretID string, opts metav1.DeleteOptions) error
+	Delete(ctx context.Context, username string, name string, opts metav1.DeleteOptions) error
 	DeleteCollection(ctx context.Context, username string, secretIDs []string, opts metav1.DeleteOptions) error
-	Get(ctx context.Context, username, secretID string, opts metav1.GetOptions) (*v1.Secret, error)
+	Get(ctx context.Context, username, name string, opts metav1.GetOptions) (*v1.Secret, error)
 	List(ctx context.Context, username string, opts metav1.ListOptions) (*v1.SecretList, error)
 }
 
@@ -42,8 +42,8 @@ func (s *secretService) Update(ctx context.Context, secret *v1.Secret, opts meta
 	}
 	return nil
 }
-func (s *secretService) Delete(ctx context.Context, username string, secretID string, opts metav1.DeleteOptions) error {
-	if err := s.store.Secrets().Delete(ctx, username, secretID, opts); err != nil {
+func (s *secretService) Delete(ctx context.Context, username string, name string, opts metav1.DeleteOptions) error {
+	if err := s.store.Secrets().Delete(ctx, username, name, opts); err != nil {
 		return errors.WithCode(code.ErrDatabase, err.Error())
 	}
 	return nil
@@ -51,9 +51,9 @@ func (s *secretService) Delete(ctx context.Context, username string, secretID st
 func (s *secretService) DeleteCollection(
 	ctx context.Context,
 	username string,
-	secretIDs []string,
+	names []string,
 	opts metav1.DeleteOptions) error {
-	if err := s.store.Secrets().DeleteCollection(ctx, username, secretIDs, opts); err != nil {
+	if err := s.store.Secrets().DeleteCollection(ctx, username, names, opts); err != nil {
 		return errors.WithCode(code.ErrDatabase, err.Error())
 	}
 
@@ -61,9 +61,9 @@ func (s *secretService) DeleteCollection(
 }
 func (s *secretService) Get(
 	ctx context.Context,
-	username, secretID string,
+	username, name string,
 	opts metav1.GetOptions) (*v1.Secret, error) {
-	secret, err := s.store.Secrets().Get(ctx, username, secretID, opts)
+	secret, err := s.store.Secrets().Get(ctx, username, name, opts)
 	if err != nil {
 		return nil, err
 	}
