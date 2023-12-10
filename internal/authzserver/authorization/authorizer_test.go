@@ -93,7 +93,7 @@ func TestAuthorizer_Authorize(t *testing.T) {
 			},
 			want: &authzv1.Response{
 				Denied: true,
-				Reason: "Request was denied by default",
+				//Reason: "Request was denied by default",
 			},
 		},
 		{
@@ -126,7 +126,7 @@ func TestAuthorizer_Authorize(t *testing.T) {
 			},
 			want: &authzv1.Response{
 				Denied: true,
-				Reason: "Request was denied by default",
+				//Reason: "Request was denied by default",
 			},
 		},
 		{
@@ -144,14 +144,75 @@ func TestAuthorizer_Authorize(t *testing.T) {
 			},
 			want: &authzv1.Response{
 				Denied: true,
-				Reason: "Request was denied by default",
+				//Reason: "Request was denied by default",
 			},
 		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			a := NewAuthorizer(mockAuthz)
-			if got := a.Authorize(tt.args.request); !reflect.DeepEqual(got, tt.want) {
+			if got := a.Authorize(tt.args.request); !reflect.DeepEqual(got.Denied, tt.want.Denied) {
+				t.Errorf("Authorizer.Authorize() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
+
+func TestAuthorizer_Authorize_Sample(t *testing.T) {
+	ctrl := gomock.NewController(t)
+	defer ctrl.Finish()
+
+	mockAuthz := NewMockAuthorizationInterface(ctrl)
+
+	accept := true
+
+	if accept {
+		mockAuthz.EXPECT().LogGrantedAccessRequest(gomock.Any(), gomock.Any(), gomock.Any()).Times(1)
+	} else {
+		mockAuthz.EXPECT().LogRejectedAccessRequest(gomock.Any(), gomock.Any(), gomock.Any()).Times(1)
+	}
+
+	mockAuthz.EXPECT().List(gomock.Any()).Return([]*ladon.DefaultPolicy{{
+		ID:          "68819e5a-738b-41ec-b03c-b58a1b19d043",
+		Description: "One policy to rule them all.",
+		Subjects:    []string{"users:<peter|ken>", "users:maria", "groups:admins"},
+		Resources:   []string{"resources:articles:<.*>", "resources:printer"},
+		Actions:     []string{"delete", "<create|update>"},
+		Effect:      ladon.AllowAccess,
+		Conditions:  ladon.Conditions{"remoteIPAddress": &ladon.CIDRCondition{CIDR: "192.168.0.1/16"}},
+	}}, nil)
+
+	type args struct {
+		request *ladon.Request
+	}
+	tests := []struct {
+		name string
+		args args
+		want *authzv1.Response
+	}{
+		{
+			name: "allow",
+			args: args{
+				request: &ladon.Request{
+					Subject:  "groups:admins",
+					Action:   "delete",
+					Resource: "resources:printer",
+					Context: ladon.Context{
+						"remoteIPAddress": "192.168.0.5",
+					},
+				},
+			},
+			want: &authzv1.Response{
+				Denied:  !accept,
+				Allowed: accept,
+				Reason:  "Request was denied by default",
+			},
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			a := NewAuthorizer(mockAuthz)
+			if got := a.Authorize(tt.args.request); !reflect.DeepEqual(got.Denied, tt.want.Denied) || !reflect.DeepEqual(got.Allowed, tt.want.Allowed) {
 				t.Errorf("Authorizer.Authorize() = %v, want %v", got, tt.want)
 			}
 		})

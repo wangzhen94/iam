@@ -5,6 +5,7 @@ import (
 	"github.com/marmotedu/errors"
 	"github.com/wangzhen94/iam/internal/pkg/code"
 	"io/fs"
+	"net/http"
 	"os"
 	"path/filepath"
 	"sync"
@@ -85,17 +86,42 @@ func getPointOfInterface() change {
 	return &cat{name: "bingan"}
 }
 
+// MyHandler 是一个自定义的 HTTP 处理器
+type MyHandler struct{}
+
+// 实现 http.Handler 接口的 ServeHTTP 方法
+func (h *MyHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+	fmt.Fprintln(w, "Hello, World!")
+}
+
 func main() {
+	//meanOfFunType()
+
+	fmt.Println(time.Now().UTC().Format(http.TimeFormat))
+
 	//recoverDemo()
 
 	//waitGroupDemo()
 
 	//typeAssert()
 
-	deletePKFiles()
+	//deletePKFiles()
 	//structComparePointImp()
 
 	//printType()
+}
+
+func meanOfFunType() {
+	// 创建一个 MyHandler 实例
+	myHandler := &MyHandler{}
+
+	//// 将 MyHandler 实例传递给 http.HandlerFunc，创建一个 http.Handler
+	//// HandlerFunc 接收 myHandler 实例的 函数，创建的是 HandlerFunc type 的函数实例， 这个函数实例，可以被用来作为
+	//handler := http.HandlerFunc(myHandler.ServeHTTP)
+
+	// 注册处理程序，并启动 HTTP 服务器
+	http.Handle("/", myHandler)
+	http.ListenAndServe(":8080", nil)
 }
 
 func recoverDemo() {

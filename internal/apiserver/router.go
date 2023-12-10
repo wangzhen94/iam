@@ -52,7 +52,8 @@ func installController(g *gin.Engine) *gin.Engine {
 			userv1.POST("", userController.Create)
 			//userv1.Use(auto.AuthFunc(), middleware.Validation())
 			userv1.Use(headUsername(), middleware.Validation())
-			userv1.DELETE(":name", userController.Delete) // admin api
+			userv1.DELETE(":name", userController.Delete)      // admin api
+			userv1.DELETE("", userController.DeleteCollection) // admin api
 			userv1.PUT(":name/change_password", userController.ChangePassword)
 			userv1.PUT(":name", userController.Update)
 			userv1.GET("", userController.List)

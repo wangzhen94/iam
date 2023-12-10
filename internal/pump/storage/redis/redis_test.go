@@ -5,9 +5,8 @@
 package redis
 
 import (
-	"testing"
-
 	genericoptions "github.com/wangzhen94/iam/internal/pkg/options"
+	"testing"
 )
 
 func TestRedisAddressConfiguration(t *testing.T) {
@@ -43,7 +42,7 @@ func TestRedisAddressConfiguration(t *testing.T) {
 		}
 	})
 
-	t.Run("Default addresses", func(t *testing.T) {
+	t.Run("Default address", func(t *testing.T) {
 		opts := &RedisOpts{}
 		simpleOpts := opts.simple()
 
