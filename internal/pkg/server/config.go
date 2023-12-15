@@ -60,7 +60,8 @@ func (s *SecureServingInfo) Address() string {
 
 // InsecureServingInfo holds configuration of the insecure http server.
 type InsecureServingInfo struct {
-	Address string
+	Address    string
+	SkipRouter []string
 }
 
 // JwtInfo defines jwt fields used to create jwt authentication middleware.

@@ -7,14 +7,13 @@ import (
 	"github.com/marmotedu/errors"
 	"github.com/wangzhen94/iam/internal/apiserver/store"
 	"github.com/wangzhen94/iam/internal/pkg/code"
-	"github.com/wangzhen94/iam/pkg/log"
 	"net/http"
 )
 
 // Validation make sure users have the right resource permission and operation.
 func Validation() gin.HandlerFunc {
 	return func(c *gin.Context) {
-		log.Info("validate admin.")
+		//log.Info("validate admin.")
 		if err := isAdmin(c); err != nil {
 			switch c.FullPath() {
 			case "/v1/user":
@@ -37,7 +36,7 @@ func Validation() gin.HandlerFunc {
 			}
 		}
 
-		log.Info("exec next chain.")
+		//log.Info("exec next chain.")
 		c.Next()
 	}
 }

@@ -15,6 +15,8 @@ import (
 // Middlewares store registered middlewares.
 var Middlewares = defaultMiddlewares()
 
+var Middlewares2 = defaultMiddlewares2()
+
 // NoCache is a middleware function that appends headers
 // to prevent the client from caching the HTTP response.
 func NoCache(c *gin.Context) {
@@ -63,5 +65,20 @@ func defaultMiddlewares() map[string]gin.HandlerFunc {
 		"requestid": RequestID(),
 		"logger":    Logger(),
 		"dump":      gindump.Dump(),
+	}
+}
+
+func defaultMiddlewares2() func([]string) map[string]gin.HandlerFunc {
+	return func(skiprouter []string) map[string]gin.HandlerFunc {
+		return map[string]gin.HandlerFunc{
+			"recovery":  gin.Recovery(),
+			"secure":    Secure,
+			"options":   Options,
+			"nocache":   NoCache,
+			"cors":      Cors(),
+			"requestid": RequestID(),
+			"logger":    Logger2(skiprouter),
+			"dump":      gindump.Dump(),
+		}
 	}
 }

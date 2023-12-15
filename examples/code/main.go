@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"github.com/marmotedu/errors"
 	"github.com/wangzhen94/iam/internal/pkg/code"
-	"io/fs"
 	"net/http"
 	"os"
 	"path/filepath"
@@ -97,7 +96,7 @@ func (h *MyHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 func main() {
 	//meanOfFunType()
 
-	fmt.Println(time.Now().UTC().Format(http.TimeFormat))
+	//fmt.Println(time.Now().UTC().Format(http.TimeFormat))
 
 	//recoverDemo()
 
@@ -105,7 +104,7 @@ func main() {
 
 	//typeAssert()
 
-	//deletePKFiles()
+	deletePKFiles()
 	//structComparePointImp()
 
 	//printType()
@@ -174,6 +173,13 @@ func structComparePointImp() {
 	c := cat{"22"}
 	c.change()
 	fmt.Println(c.name)
+
+	changeCat(c)
+	fmt.Println(c.name)
+}
+
+func changeCat(c cat) {
+	c.name = "changed"
 }
 
 func typeAssert() {
@@ -219,14 +225,15 @@ func deletePKFiles() {
 	// 指定目录
 	targetDir := "/Users/wangzhen/go/src/github.com/wangzhen94/iam"
 
+	dels := make(map[string]func(string) error, 0)
 	// 遍历目录
 	err := filepath.Walk(targetDir, func(path string, info os.FileInfo, err error) error {
 		if err != nil {
-			if _, ok := err.(*fs.PathError); ok {
-				return nil
-			}
-			fmt.Println(err)
-			return nil
+			//if _, ok := err.(*fs.PathError); ok {
+			//	return nil
+			//}
+			//fmt.Println(err)
+			return err
 		}
 
 		// 检查是否是目录
@@ -236,15 +243,16 @@ func deletePKFiles() {
 
 			// 如果同时包含.pk文件和其他文件，则删除.pk文件
 			if canDel {
-				err := deletePkFile(path)
-				if err != nil {
-					fmt.Println(err)
-				}
+				dels[path] = deletePkFile
 			}
 		}
 
 		return nil
 	})
+
+	for path, del := range dels {
+		_ = del(path)
+	}
 
 	if err != nil {
 		fmt.Println(err)

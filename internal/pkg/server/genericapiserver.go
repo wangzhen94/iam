@@ -103,7 +103,8 @@ func (s *GenericAPIServer) InstallMiddlewares() {
 
 	// install custom middlewares
 	for _, m := range s.middlewares {
-		mw, ok := middleware.Middlewares[m]
+		//mw, ok := middleware.Middlewares[m]
+		mw, ok := middleware.Middlewares2(s.InsecureServingInfo.SkipRouter)[m]
 		if !ok {
 			log.Warnf("can not find middleware: %s", m)
 

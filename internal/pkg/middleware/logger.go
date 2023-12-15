@@ -37,6 +37,10 @@ func Logger() gin.HandlerFunc {
 	return LoggerWithConfig(GetLoggerConfig(nil, nil, nil))
 }
 
+func Logger2(skiprouter []string) gin.HandlerFunc {
+	return LoggerWithConfig(GetLoggerConfig(nil, nil, skiprouter))
+}
+
 func LoggerWithConfig(conf gin.LoggerConfig) gin.HandlerFunc {
 	formatter := conf.Formatter
 	if formatter == nil {

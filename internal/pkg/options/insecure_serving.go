@@ -17,8 +17,9 @@ import (
 // InsecureServingOptions are for creating an unauthenticated, unauthorized, insecure port.
 // No one should be using these anymore.
 type InsecureServingOptions struct {
-	BindAddress string `json:"bind-address" mapstructure:"bind-address"`
-	BindPort    int    `json:"bind-port"    mapstructure:"bind-port"`
+	BindAddress string   `json:"bind-address" mapstructure:"bind-address"`
+	BindPort    int      `json:"bind-port"    mapstructure:"bind-port"`
+	SkipRouter  []string `json:"skip-router"    mapstructure:"skip-router"`
 }
 
 // NewInsecureServingOptions is for creating an unauthenticated, unauthorized, insecure port.
@@ -33,7 +34,8 @@ func NewInsecureServingOptions() *InsecureServingOptions {
 // ApplyTo applies the run options to the method receiver and returns self.
 func (s *InsecureServingOptions) ApplyTo(c *server.Config) error {
 	c.InsecureServing = &server.InsecureServingInfo{
-		Address: net.JoinHostPort(s.BindAddress, strconv.Itoa(s.BindPort)),
+		Address:    net.JoinHostPort(s.BindAddress, strconv.Itoa(s.BindPort)),
+		SkipRouter: s.SkipRouter,
 	}
 
 	return nil
@@ -68,4 +70,6 @@ func (s *InsecureServingOptions) AddFlags(fs *pflag.FlagSet) {
 		"that firewall rules are set up such that this port is not reachable from outside of "+
 		"the deployed machine and that port 443 on the iam public address is proxied to this "+
 		"port. This is performed by nginx in the default setup. Set to zero to disable.")
+	fs.StringSliceVar(&s.SkipRouter, "server.skiprouters", s.SkipRouter, ""+
+		"List of allowed middlewares for server, comma separated. If this list is empty default middlewares will be used.")
 }
