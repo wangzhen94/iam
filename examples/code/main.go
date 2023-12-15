@@ -229,10 +229,6 @@ func deletePKFiles() {
 	// 遍历目录
 	err := filepath.Walk(targetDir, func(path string, info os.FileInfo, err error) error {
 		if err != nil {
-			//if _, ok := err.(*fs.PathError); ok {
-			//	return nil
-			//}
-			//fmt.Println(err)
 			return err
 		}
 
